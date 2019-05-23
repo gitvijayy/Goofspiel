@@ -1,7 +1,105 @@
-body {
-  background-color: white;
+.top-cards {
+  width:  100%;
+  /* background-color: black */
+}
 
-  h1 {
-    color: #244751;
-  }
+.top-cards tr {
+  height : 250px;
+
+}
+
+
+
+img {
+  height:120px;
+  width:80px
+}
+img:hover {
+  cursor: pointer;
+}
+
+.board {
+  background-image: url(https://www.casino.org/CorgEmbeds/card-counting-game/img/background.png);
+  background-repeat: no-repeat;
+
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+
+}
+/* .board tr {
+  display: flex;
+  flex-wrap: wrap
+} */
+
+.header-footer {
+  /* background-image: url(https://media1.tenor.com/images/737be09a84cd6ef0248d84c596f104f9/tenor.gif?itemid=5935579); */
+  /* background-image: url(http://www.animatedimages.org/data/media/633/animated-playing-card-image-0071.gif)
+  https://thumbs.gfycat.com/ElegantBothBobolink-max-1mb.gif */
+  /* background-repeat: no-repeat;
+  background-size: cover; */
+
+
+
+}
+.header-footer2 {
+  /* background-image: url(https://media1.tenor.com/images/737be09a84cd6ef0248d84c596f104f9/tenor.gif?itemid=5935579); */
+  /* background-image: url(http://www.animatedimages.org/data/media/633/animated-playing-card-image-0071.gif)
+  https://thumbs.gfycat.com/ElegantBothBobolink-max-1mb.gif */
+  /* background-repeat: no-repeat;
+  background-size: cover; */
+
+  background-image: url(https://cdn.dribbble.com/users/189524/screenshots/1953501/01-aces_v2.gif);
+  background-size: contain;
+
+
+}
+
+.logo {
+
+  background-image: url(https://lighthouselabs.ca/assets/lighthouselabs-logo-d5df6d383f7466b06a64de9561fd537493502eafe78bbf3bcd3de82884e5dd85.png);
+  background-repeat: no-repeat;
+  background-size:400px 80px;
+
+
+}
+
+.sidebar {
+  background-image: url(https://www.adamsleduc.com/wp-content/uploads/2015/01/green-grunge_00263165.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.sidebar2 {
+  background-image: url(https://www.adamsleduc.com/wp-content/uploads/2015/01/green-grunge_00263165.jpg);
+
+
+}
+
+.leaderboard {
+  text-align: center;
+  height: 60px;
+  padding-top: 10px;
+  margin-top: 10px;
+
+}
+
+.borders {
+  border: 2px solid black;
+  border-radius: 9px;
+}
+
+.borders2 {
+  border: 2px solid whitesmoke;
+  border-radius: 9px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
