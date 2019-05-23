@@ -27,12 +27,16 @@ app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// code that outputs Sass file to css on the frontend - do not remove
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
   debug: true,
   outputStyle: 'expanded'
 }));
+
+
 app.use(express.static("public"));
 
 // Mount all resource routes
