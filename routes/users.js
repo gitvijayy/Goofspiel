@@ -5,14 +5,28 @@ const router  = express.Router();
 
 module.exports = (knex) => {
 
-  router.get("/", (req, res) => {
-    knex
-      .select("*")
-      .from("users")
+  // insert username to database when put request to /users/
+  router.put("/", (req, res) => {
+    knex('users')
+      .insert({username: req.body});
+  });
+
+  // on get requests to /users/:username  -> return all data in games table where player1 or player2 = username
+  // missing: information for leaderboard
+  router.get("/:username", (req, res) => {
+    knex('games')
+      .select('*')
+      .where('player1', '=', req.body)
+      .orWhere('player2', '=', req.body)
       .then((results) => {
         res.json(results);
     });
+
   });
+
+
+
+  
 
   return router;
 }
