@@ -1,35 +1,60 @@
-"use strict";
+'use strict';
 
 const express = require('express');
 const router  = express.Router();
 
 module.exports = (knex) => {
-
-  router.put("/", (req, res) => {
-    // knex
-    //   .select("*")
-    //   .from("games")
-    //   .then((results) => {
-    //     res.json(results);
-    // });
+//on put request to /games check if any games missing player2, and if user already in a game waiting for player2
+//if game found waiting for player2 where player1 is not user, update database with player2
+//if game not found with missing player2 or if only game missing player2 is current user's game, create another new game
+  router.put('/', (req, res) => {
+    knex
+      .select('id')
+      .from('games')
+      .where('player2', '=', null)
+      .where('player1', '!=', req.body.username)
+      .then((results) => {
+        if(results){
+          knex('games')
+          .where('id', '=', results.id)
+          .update({player2: req.body.username})
+        } else {
+          knex('games')
+          .insert({player1: req.body.username})
+        }
+        
+    });
   });
 
-  // router.get("/:id", (req, res) => {
-  //   knex
-  //     .select("*")
-  //     .from("users")
-  //     .then((results) => {
-  //       res.json(results);
-  //   });
-  // });
+//on get request to /games/:gameid - retrieve all turn info related to the game
+  router.get('/:gameid', (req, res) => {
+    knex
+      .select('*')
+      .from('turns')
+      .where('games_id', '=', req.params.gameid)
+      .then((results) => {
+        res.json(results);
+    });
+  });
 
-  // router.put("/:id", (req, res) => {
-  //   knex
-  //     .select("*")
-  //     .from("users")
-  //     .then((results) => {
-  //       res.json(results);
-  //   });
-  // });
+//on put request to /games/:gameid - enter new information into turns
+  router.put('/:gameid', (req, res) => {
+    knex('turns')
+      .select('id')
+      .where('games_id', '=', req.params.gameid)
+      .where('bet2', '=', null)
+      .then((results) => {
+        if(results){
+          knex('turns')
+            .where('id', '=', results)
+            .update({'bet2':req.body.bet})
+        } else {
+          knex('turns')
+            .where('id' , '=', results)
+            .insert({games_id:req.params.gameid, prize:req.body.prize, bet1:req.body.bet1})
+        }
+        res.json(results);
+    });
+  });
   return router;
 }
