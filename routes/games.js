@@ -8,22 +8,33 @@ module.exports = (knex) => {
 //if game found waiting for player2 where player1 is not user, update database with player2
 //if game not found with missing player2 or if only game missing player2 is current user's game, create another new game
   router.put('/', (req, res) => {
+    console.log('req.body:',req.body);
     knex
       .select('id')
       .from('games')
       .where('player2', '=', null)
       .where('player1', '!=', req.body.username)
       .then((results) => {
-        if(results){
+        console.log('results:', results);
+        if(results[0]){
+          console.log('results.id:', results.id);
           knex('games')
           .where('id', '=', results.id)
-          .update({player2: req.body.username})
-        } else {
+          .update({player2: req.body.username});
+          res.status(200).send();
+        } else { /// insert/update not being triggered
+
+          console.log('results.id:', results.id);
           knex('games')
-          .insert({player1: req.body.username})
+          .insert({player1: req.body.username});
+          res.status(200).send();
+        } 
+      })
+      .catch(
+        function(error) {
+          res.status(500).json({error});
         }
-        
-    });
+      );
   });
 
 //on get request to /games/:gameid - retrieve all turn info related to the game
@@ -54,7 +65,12 @@ module.exports = (knex) => {
             .insert({games_id:req.params.gameid, prize:req.body.prize, bet1:req.body.bet1})
         }
         res.json(results);
-    });
+      })
+      .catch(
+        function(error) {
+          res.status(500).json({error});
+        }
+      );
   });
   return router;
 }
