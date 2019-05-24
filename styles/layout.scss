@@ -2,15 +2,37 @@ body {
   background-color: black;
 }
 
-header {
-  height: 135px;
+.user-logged-out {
+  background-image: url("https://i.pinimg.com/originals/7a/11/fe/7a11fe95e6c8aa2b3db37b17ca941e9c.gif");
+  background-size: contain;
+}
 
+// .no-active-games {
+//   background-image: "../public/images/aces.png";
+//   background-size: contain
+// }
+
+header {
+  // height: 135px;
+
+  // div {
+  //   height: 100%;
+  //   border: 2px solid black;
+  //   border-radius: 9px;
+  //   display: flex;
+  //   justify-content: space-evenly;
+  // }
+
+  height: 135px;
   div {
-    height: 100%;
     border: 2px solid black;
     border-radius: 9px;
+    height: 100%;
+  }
+  .block-2 {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
   }
 
   .block-3 {
@@ -43,7 +65,19 @@ main {
       justify-content: space-evenly;
       align-items: center;
     }
-
+    .prize-card {
+      flex-direction: column;
+      .bet-1 {
+        margin-bottom: 0px;
+        margin-top: 16px;
+      }
+      .prize {
+        margin-bottom: 15px;
+        margin-top: 15px;
+      }
+      .bet-2 {
+      }
+    }
     .hide-display {
       visibility: hidden;
     }
@@ -115,6 +149,7 @@ footer {
     justify-content: space-evenly;
     align-items: center;
   }
+
   .block-3 {
     background-image: url(https://cdn.dribbble.com/users/189524/screenshots/1953501/01-aces_v2.gif);
     background-size: contain;

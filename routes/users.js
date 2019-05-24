@@ -21,10 +21,12 @@ module.exports = (knex) => {
       .then(res.status(200).send())
       .catch(
         function(error) {
-          res.status(500).json({error});
+          //res.status(500).json({error});
+          res.status(500).send();
         }
       );
   });
+
 
   // on get requests to /users/:username  -> return all data in games table where player1 or player2 = username
   // missing: information for leaderboard

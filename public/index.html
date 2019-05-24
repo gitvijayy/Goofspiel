@@ -12,86 +12,116 @@
   <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/new-game.js"></script>
   <script type="text/javascript" src="/scripts/game-play.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-  <header class="row">
-    <div class="block-1 col-1 bg-warning">
-      <h1 class="player-1-turn text-danger"></h1>
-    </div>
-    <div class="block-2 col-7 bg-success ">
-      <p class="btn btn-dark btn-lg">Total</p>
-      <article class="player-1-prize">
+  <div class="user-logged-out vh-100" style="display: flex;justify-content:center;align-items: center">
+    <main class="bg-light"
+      style="border-radius:10px;width:700px;height:550px;flex-direction:column;display: flex;justify-content:center;align-items: center">
+      <h1 class="text-danger" style="font-family: 'Stylish', sans-serif;font-size: -webkit-xxx-large">GOOFSPIEL</h1>
+      <input class="form-control-sm bg-dark text-white username" type="text" placeholder="username"
+        style="font-family: 'Stylish', sans-serif;height: 47px;width: 320px;font-size: 2rem;">
+      <p class="text-dark" style="font-weight: bold"></p>
+      <button style="width:320px" class="btn btn-danger btn-lg user-submit">Login</button>
+      <h1 class="text-danger" style="font-family: 'Stylish', sans-serif;font-size: -webkit-xxx-large">Game Of Pure
+        Strategy !!</h1>
+      <img src="images/lhl" style="width: 40em;height:8em">
+    </main>
+  </div>
 
-      </article>
-    </div>
-    <div class="block-3 col-4">
-    </div>
-  </header>
 
-  <main class="row">
-    <div class="block-1 col-1 borders pre-scrollable text-white">
-      <h3 class="btn btn-danger btn-lg btn-block">Active Games</h3>
-    </div>
-    <div class="block-2 col-7">
 
-      <article class="player-1 hide-display">
+  <div class="user-logged-in">
+    <header class="row">
+      <div class="block-1 col-1 bg-warning">
+        <h1 class="player-1-turn text-danger"></h1>
+      </div>
+      <div class="block-2 col-7 bg-success ">
+        <p class="btn btn-dark btn-lg"></p>
+        <article class="player-1-prize">
 
-      </article>
-      <article class="prize-card hide-display">
-        <p class="btn btn-dark btn-lg bet-1">Player 1 <img src="images/blackBack"></p>
-        <p class="btn btn-danger btn-lg prize">Prize <img src="images/blackBack"></p>
-        <p class="btn btn-dark btn-lg bet-2">Player 2 <img src="images/blackBack"></p>
-      </article>
-      <article class="player-2 hide-display">
+        </article>
+      </div>
+      <div class="block-3 col-4">
+      </div>
+    </header>
 
-      </article>
-    </div>
-    <div class="block-3 col-1">
-      <button class="btn btn-success btn-lg btn-block  new-game">New Game</button>
-      <button class="btn btn-warning btn-lg btn-block refresh">Refresh</button>
-      <button class="btn btn-info btn-lg btn-block archive">Archive</button>
-      <button class="btn btn-danger btn-lg btn-block leader">Leader</button>
-    </div>
-    <div class="block-4 col-3 text-black">
-      <h3 class="btn-danger">LEADERBOARD</h3>
-      <table class="table-bordered table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th>Rank</th>
-            <th>User</th>
-            <th>Played</th>
-            <th>Won</th>
-            <th>Lost</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>1adadad</td>
-            <td>1adadad</td>
-            <td>1adadad</td>
-            <td>1adadad</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </main>
+    <main class="row">
+      <div class="block-1 col-1 borders pre-scrollable text-white">
+        <h2 class="btn btn-danger btn-lg btn-block ">Active Games</h2>
+        <!-- <p class="btn btn-danger btn-lg btn-block">Active Games</p> -->
+      </div>
+      <div class="block-2 col-7">
 
-  <footer class="row">
-    <div class="block-1  bg-warning col-1">
-      <h1 class="player-2-turn text-danger"></h1>
-    </div>
-    <div class="block-2 bg-success col-7">
-      <p class="btn btn-dark btn-lg">Total</p>
-      <article class="player-2-prize">
+        <!-- <img style = "position: relative;top: 500px;" src = "images/aces.png">
+    <img style = "position: relative;top: 380px;left: 500px;" src = "images/aces.png"> -->
 
-      </article>
-    </div>
-    <div class="block-3 col-4">
-    </div>
-  </footer>
+
+
+        <article class="player-1 hide-display">
+
+
+        </article>
+        <article class="prize-card hide-display">
+          <p class="btn btn-dark btn-lg bet-1">Player 1</p>
+          <img class="bet-1-img" src="images/blackBack">
+          <p class="btn btn-danger btn-lg prize">Prize<img class="prize-img" src="images/blackBack"></p>
+          <img class="bet-2-img" src="images/blackBack">
+          <p class="btn btn-dark btn-lg bet-2">Player 2</p>
+        </article>
+        <article class="player-2 hide-display">
+
+        </article>
+      </div>
+      <div class="block-3 col-1">
+        <button class="btn btn-success btn-lg btn-block  new-game">New Game</button>
+        <button class="btn btn-warning btn-lg btn-block refresh">Refresh</button>
+        <button class="btn btn-info btn-lg btn-block archive">Archive</button>
+        <button class="btn btn-danger btn-lg btn-block leader">Leader</button>
+      </div>
+      <div class="block-4 col-3 text-black">
+        <h3 class="btn-danger">LEADERBOARD</h3>
+        <table class="table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Rank</th>
+              <th>User</th>
+              <th>Played</th>
+              <th>Won</th>
+              <th>Lost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>1adadad</td>
+              <td>1adadad</td>
+              <td>1adadad</td>
+              <td>1adadad</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer class="row">
+      <div class="block-1  bg-warning col-1">
+        <h1 class="player-2-turn text-danger"></h1>
+      </div>
+      <div class="block-2 bg-success col-7">
+        <p class="btn btn-dark btn-lg"></p>
+        <article class="player-2-prize">
+
+        </article>
+      </div>
+      <div class="block-3 col-4">
+      </div>
+    </footer>
+
+  </div>
+
 
 
 </body>

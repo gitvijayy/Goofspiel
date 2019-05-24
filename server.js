@@ -47,12 +47,12 @@ app.use("/users", usersRoutes(knex));
 app.use("/games", gamesRoutes(knex));
 
 // Home page
-app.get("/", (req, res) => {
+// app.get("/", (req, res) => {
 
-  res.render("index");
-//check for cookie, if cookie then redirect to users/:userid
+//   res.render("index");
+// //check for cookie, if cookie then redirect to users/:userid
 
-});
+// });
 
 
 

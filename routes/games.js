@@ -19,11 +19,11 @@ module.exports = (knex) => {
           .where('id', results[0].id)
           .update({player2: req.body.username, status:'active'})
           .then(res.status(200).send());
-        } else { 
+        } else {
           knex('games')
           .insert({player1: req.body.username, status: 'inactive'})
-          .then(res.status(200).send());      
-        } 
+          .then(res.status(200).send());
+        }
       })
       .catch(
         function(error) {
@@ -47,6 +47,7 @@ module.exports = (knex) => {
 //Find all turns with gameid, if there's an entry with no bet2, that turn's unfinished, put bet into bet2
 //After bet2 is updated with new value, turn is finished - calculate winner & points won
   router.put('/:gameid', (req, res) => {
+
     knex('turns')
       .select('id', 'bet1', 'prize')
       .where('games_id', req.params.gameid)
@@ -66,17 +67,17 @@ module.exports = (knex) => {
             winner = null;
             points = 0;
           }
-          //update database with bet2, winner, prize  
+          //update database with bet2, winner, prize
           console.log(results[0]);
           knex('turns')
             .where('id', results[0].id)
             .update({'bet2':req.body.bet, 'winner':winner, 'points':points})
-            .then(res.status(200).send()); 
+            .then(res.status(200).send());
         } else {
           knex('turns')
             .where('id', results)
             .insert({games_id:req.params.gameid, prize:req.body.prize, bet1:req.body.bet})
-            .then(res.status(200).send()); 
+            .then(res.status(200).send());
         }
       })
       .catch(
