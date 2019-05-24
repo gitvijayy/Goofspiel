@@ -43,6 +43,18 @@ main {
       justify-content: space-evenly;
       align-items: center;
     }
+
+    .hide-display {
+      visibility: hidden;
+    }
+  }
+  .flip {
+    transform: rotateY(90deg);
+    transform-style: preserve-3d;
+    transition: all 2s linear;
+    transform: rotateY(360deg);
+    box-shadow: -5px 5px 5px #aaa;
+    perspective: 1000;
   }
 
   .block-3 {
@@ -60,6 +72,18 @@ main {
     border-radius: 9px;
     background-color: lightgray;
   }
+}
+
+h1 {
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.playerTurns {
+  background-image: url(https://media1.tenor.com/images/737be09a84cd6ef0248d84c596f104f9/tenor.gif?itemid=5935579);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 h3 {
@@ -104,8 +128,6 @@ img {
 img:hover {
   cursor: pointer;
 }
-
-
 
 // .header-footer {
 //   /* background-image: url(https://media1.tenor.com/images/737be09a84cd6ef0248d84c596f104f9/tenor.gif?itemid=5935579); */

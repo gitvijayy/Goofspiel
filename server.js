@@ -37,7 +37,7 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
-// Mount all resource routes
+//Mount all resource routes
 // app.use("/api/users", usersRoutes(knex));
 
 // Home page

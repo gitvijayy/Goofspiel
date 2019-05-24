@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Home Page</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -9,15 +10,21 @@
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/new-game.js"></script>
+  <script type="text/javascript" src="/scripts/game-play.js"></script>
 </head>
+
 <body>
 
   <header class="row">
     <div class="block-1 col-1 bg-warning">
+      <h1 class="player-1-turn text-danger"></h1>
     </div>
     <div class="block-2 col-7 bg-success ">
       <p class="btn btn-dark btn-lg">Total</p>
-      <img src="images/2C.png">
+      <article class="player-1-prize">
+
+      </article>
     </div>
     <div class="block-3 col-4">
     </div>
@@ -28,23 +35,24 @@
       <h3 class="btn btn-danger btn-lg btn-block">Active Games</h3>
     </div>
     <div class="block-2 col-7">
-      <article class="player-1">
-        <img src="images/2C.png">
+
+      <article class="player-1 hide-display">
+
       </article>
-      <article class="prize-card">
-        <p class="btn btn-dark btn-lg">Player 1 <img src="images/blackBack"></p>
-        <p class="btn btn-danger btn-lg">Prize <img src="images/2D.png"></p>
-        <p class="btn btn-dark btn-lg">Player 2 <img src="images/blackBack"></p>
+      <article class="prize-card hide-display">
+        <p class="btn btn-dark btn-lg bet-1">Player 1 <img src="images/blackBack"></p>
+        <p class="btn btn-danger btn-lg prize">Prize <img src="images/blackBack"></p>
+        <p class="btn btn-dark btn-lg bet-2">Player 2 <img src="images/blackBack"></p>
       </article>
-      <article class="player-2">
-        <img src="images/2C.png">
+      <article class="player-2 hide-display">
+
       </article>
     </div>
     <div class="block-3 col-1">
-      <button class="btn btn-success btn-lg btn-block">New Game</button>
-      <button class="btn btn-warning btn-lg btn-block">Refresh</button>
-      <button class="btn btn-info btn-lg btn-block">Archive</button>
-      <button class="btn btn-danger btn-lg btn-block">Leader</button>
+      <button class="btn btn-success btn-lg btn-block  new-game">New Game</button>
+      <button class="btn btn-warning btn-lg btn-block refresh">Refresh</button>
+      <button class="btn btn-info btn-lg btn-block archive">Archive</button>
+      <button class="btn btn-danger btn-lg btn-block leader">Leader</button>
     </div>
     <div class="block-4 col-3 text-black">
       <h3 class="btn-danger">LEADERBOARD</h3>
@@ -73,13 +81,19 @@
 
   <footer class="row">
     <div class="block-1  bg-warning col-1">
+      <h1 class="player-2-turn text-danger"></h1>
     </div>
     <div class="block-2 bg-success col-7">
-      <img src="images/2C.png">
+      <p class="btn btn-dark btn-lg">Total</p>
+      <article class="player-2-prize">
+
+      </article>
     </div>
     <div class="block-3 col-4">
     </div>
   </footer>
 
+
 </body>
+
 </html>
