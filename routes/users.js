@@ -31,8 +31,8 @@ module.exports = (knex) => {
   router.get("/:username", (req, res) => {
     knex('games')
       .select('*')
-      .where('player1', '=', req.params.username)
-      .orWhere('player2', '=', req.params.username)
+      .where('player1', req.params.username)
+      .orWhere('player2', req.params.username)
       .then((results) => {
         res.json(results);
       });

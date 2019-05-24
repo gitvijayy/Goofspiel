@@ -9,25 +9,24 @@ module.exports = (knex) => {
 //if game not found with missing player2 or if only game missing player2 is current user's game, create another new game
   router.put('/', (req, res) => {
     console.log('req.body:',req.body);
-    knex
+      knex
       .select('id')
       .from('games')
-      .where('player2', '=', null)
+      .whereNull('player2')
       .where('player1', '!=', req.body.username)
       .then((results) => {
         console.log('results:', results);
         if(results[0]){
-          console.log('results.id:', results.id);
+          console.log('if block triggered');
           knex('games')
-          .where('id', '=', results.id)
-          .update({player2: req.body.username});
-          res.status(200).send();
-        } else { /// insert/update not being triggered
-
-          console.log('results.id:', results.id);
+          .where('id', results[0].id)
+          .update({player2: req.body.username})
+          .then(res.status(200).send());
+        } else { 
+          console.log('triggered else block');
           knex('games')
-          .insert({player1: req.body.username});
-          res.status(200).send();
+          .insert({player1: req.body.username})
+          .then(res.status(200).send());      
         } 
       })
       .catch(
@@ -53,7 +52,7 @@ module.exports = (knex) => {
     knex('turns')
       .select('id')
       .where('games_id', '=', req.params.gameid)
-      .where('bet2', '=', null)
+      .whereNull('bet2', '=', null)
       .then((results) => {
         if(results){
           knex('turns')
