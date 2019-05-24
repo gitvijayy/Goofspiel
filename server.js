@@ -18,6 +18,7 @@ const knexLogger  = require('knex-logger');
 //app.use(express.static(`public`));
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const gamesRoutes = require("./routes/games");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -29,21 +30,32 @@ app.use(knexLogger(knex));
 
 // app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// code that outputs Sass file to css on the frontend - do not remove
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
   debug: true,
   outputStyle: 'expanded'
 }));
+
+
 app.use(express.static("public"));
 
-//Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
+// Mount all resource routes
+app.use("/users", usersRoutes(knex));
+app.use("/games", gamesRoutes(knex));
 
 // Home page
-// app.get("/", (req, res) => {
-//   res.render("index");
-// });
+app.get("/", (req, res) => {
+
+  res.render("index");
+//check for cookie, if cookie then redirect to users/:userid
+
+});
+
+
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
