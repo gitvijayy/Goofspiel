@@ -8,23 +8,18 @@ module.exports = (knex) => {
 //if game found waiting for player2 where player1 is not user, update database with player2
 //if game not found with missing player2 or if only game missing player2 is current user's game, create another new game
   router.put('/', (req, res) => {
-    console.log('req.body:',req.body);
       knex
       .select('id')
       .from('games')
       .whereNull('player2')
       .where('player1', '!=', req.body.username)
       .then((results) => {
-        console.log('results:', results);
         if(results[0]){
-          console.log('if block triggered');
           knex('games')
           .where('id', results[0].id)
           .update({player2: req.body.username, status:'active'})
           .then(res.status(200).send());
         } else { 
-          console.log('triggered else block');
-          console.log('username:',req.body.username);
           knex('games')
           .insert({player1: req.body.username, status: 'inactive'})
           .then(res.status(200).send());      
@@ -49,22 +44,40 @@ module.exports = (knex) => {
   });
 
 //on put request to /games/:gameid - enter new information into turns
+//Find all turns with gameid, if there's an entry with no bet2, that turn's unfinished, put bet into bet2
+//After bet2 is updated with new value, turn is finished - calculate winner & points won
   router.put('/:gameid', (req, res) => {
     knex('turns')
-      .select('id')
-      .where('games_id', '=', req.params.gameid)
-      .whereNull('bet2', '=', null)
+      .select('id', 'bet1', 'prize')
+      .where('games_id', req.params.gameid)
+      .whereNull('bet2')
       .then((results) => {
-        if(results){
+        //logic check to see who wins
+        if(results[0]){
+          let score = results[0].bet1 - req.body.bet;
+          let winner = '';
+          let points = results[0].prize;
+          console.log(results[0]);
+          if (score > 0){
+            winner = 'player1'
+          } else if (score < 0) {
+            winner = 'player2'
+          } else {
+            winner = null;
+            points = 0;
+          }
+          //update data base with bet2, winner, prize  
+          console.log(results[0]);
           knex('turns')
-            .where('id', '=', results)
-            .update({'bet2':req.body.bet})
+            .where('id', results[0].id)
+            .update({'bet2':req.body.bet, 'winner':winner, 'points':points})
+            .then(res.status(200).send()); 
         } else {
           knex('turns')
-            .where('id' , '=', results)
-            .insert({games_id:req.params.gameid, prize:req.body.prize, bet1:req.body.bet1})
+            .where('id', results)
+            .insert({games_id:req.params.gameid, prize:req.body.prize, bet1:req.body.bet})
+            .then(res.status(200).send()); 
         }
-        res.json(results);
       })
       .catch(
         function(error) {
