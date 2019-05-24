@@ -49,15 +49,38 @@ module.exports = (knex) => {
   router.put('/:gameid', (req, res) => {
     //if client send status = done - set game status to done
     if (req.body.status === 'done'){
+      //select all turns that matches game id
+      // knex('turns')
+      //   .select('points')
+      //   .where('games_id', req.params.gameid)
+      //   // select where winner = player1 and count the total points compare value, then select winner with id and player1/2 from games, update status, winner     
+      //   .where('winner', 'player1')
+      //   .sum('points')
+      //   .then((results) => {
+      //     let p1 = results[0].points;
+      //     // select where winner = player 2 and count the total points
+      //     knex('turns')
+      //       .select('points')
+      //       .where('games_id', req.params.gameid)
+      //       .sum('points')
+      //       .then((results) =>{
+      //         let p2 = results[0].points;
+              
+      //       })
+      //   })
+      
+      
       knex('games')
       .where('id', req.params.gameid)
       .update({'status':'done'})
-      .then(res.status(200).send())
+      .then(
+        res.status(200).send())
       .catch(
         function(error) {
           res.status(500).json({error});
         }
       );
+    // else games is not over, update each turn 
     } else {
       knex('turns')
         .select('id', 'bet1', 'prize')
@@ -66,20 +89,18 @@ module.exports = (knex) => {
         .then((results) => {
           //logic check to see who wins
           if(results[0]){
-            let score = results[0].bet1 - req.body.bet;
+            // let score = results[0].bet1 - req.body.bet;
             let winner = '';
             let points = results[0].prize;
-            console.log(results[0]);
-            if (score > 0){
+            if (results[0].bet1 > req.body.bet){
               winner = 'player1'
-            } else if (score < 0) {
+            } else if (results[0].bet1 < req.body.bet) {
               winner = 'player2'
             } else {
               winner = null;
               points = 0;
             }
             //update database with bet2, winner, prize  
-            console.log(results[0]);
             knex('turns')
               .where('id', results[0].id)
               .update({'bet2':req.body.bet, 'winner':winner, 'points':points})
