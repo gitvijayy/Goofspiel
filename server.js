@@ -46,6 +46,14 @@ app.use(express.static("public"));
 app.use("/users", usersRoutes(knex));
 app.use("/games", gamesRoutes(knex));
 
+app.get('/leaders', (req, res) =>{
+  knex('users')
+  .select('*')
+  .then((results) => {
+    res.json(results);
+  });
+})
+
 // Home page
 // app.get("/", (req, res) => {
 

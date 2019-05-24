@@ -144,10 +144,7 @@ module.exports = (knex) => {
                             .then((results) => {
                               res.status(200).send()
                             })
-                          })
-                    
-
-                        
+                          })                       
                       })
                       .catch(
                         function(error) {
