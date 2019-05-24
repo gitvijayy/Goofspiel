@@ -17,7 +17,7 @@ module.exports = (knex) => {
   // insert username to database when put request to /users/
   router.put("/", (req, res) => {
     knex('users')
-      .insert({username: req.body.username})
+      .insert({username: req.body.username, games_played:0, games_won:0})
       .then(res.status(200).send())
       .catch(
         function(error) {
