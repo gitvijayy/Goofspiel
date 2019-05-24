@@ -20,12 +20,13 @@ module.exports = (knex) => {
           console.log('if block triggered');
           knex('games')
           .where('id', results[0].id)
-          .update({player2: req.body.username})
+          .update({player2: req.body.username, status:'active'})
           .then(res.status(200).send());
         } else { 
           console.log('triggered else block');
+          console.log('username:',req.body.username);
           knex('games')
-          .insert({player1: req.body.username})
+          .insert({player1: req.body.username, status: 'inactive'})
           .then(res.status(200).send());      
         } 
       })
