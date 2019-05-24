@@ -66,7 +66,7 @@ module.exports = (knex) => {
             winner = null;
             points = 0;
           }
-          //update data base with bet2, winner, prize  
+          //update database with bet2, winner, prize  
           console.log(results[0]);
           knex('turns')
             .where('id', results[0].id)
