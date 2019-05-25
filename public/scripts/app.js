@@ -230,13 +230,14 @@ $(document).ready(function () {
   }
 ///////////////////////////////////////////////////////
   const getArchives = (username) => {
+    console.log(1,username)
     $.ajax({
       method: "GET",
-      url: `/archives`,
-      data: {username:username}
+      url: `/archives/${username}`,
+      //data: {username: username}
     }).done((archives) => {
-      console.log(archives)
-      $(`.archives tr`).remove();
+      console.log(2,archives)
+     // $(`.archives tr`).remove();
       // leaders.forEach((element, index) => {
         // $(`.archives`)
         //   .append($(`<tr>

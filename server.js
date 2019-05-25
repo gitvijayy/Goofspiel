@@ -54,11 +54,12 @@ app.get('/leaders', (req, res) =>{
   });
 })
 
-app.get('/archives', (req, res) =>{
+app.get('/archives/:username', (req, res) =>{
+
   knex('games')
   .select('*')
-  .where('player1', req.body.username)
-  .orWhere('player2', req.body.username)
+  .where('player1', req.params.username)
+  .orWhere('player2', req.params.username)
   .then((results) => {
     res.json(results);
   });
