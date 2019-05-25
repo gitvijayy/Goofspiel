@@ -46,13 +46,23 @@ app.use(express.static("public"));
 app.use("/users", usersRoutes(knex));
 app.use("/games", gamesRoutes(knex));
 
-// Home page
-// app.get("/", (req, res) => {
+app.get('/leaders', (req, res) =>{
+  knex('users')
+  .select('*')
+  .then((results) => {
+    res.json(results);
+  });
+})
 
-//   res.render("index");
-// //check for cookie, if cookie then redirect to users/:userid
-
-// });
+app.get('/archives', (req, res) =>{
+  knex('games')
+  .select('*')
+  .where('player1', req.body.username)
+  .orWhere('player2', req.body.username)
+  .then((results) => {
+    res.json(results);
+  });
+})
 
 
 
