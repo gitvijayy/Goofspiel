@@ -97,7 +97,7 @@ module.exports = (knex) => {
             .insert({ games_id: req.params.gameid, prize: req.body.prize, bet1: req.body.bet })
             .then(function (result) {
               if (req.body.status !== 'done') {
-                console.log(result);
+                //console.log(result);
                 res.status(200).send()
               }
             });
@@ -108,7 +108,6 @@ module.exports = (knex) => {
           console.error(error);
         }
       );
-
 
     // if game status = done
     if (req.body.status === 'done') {

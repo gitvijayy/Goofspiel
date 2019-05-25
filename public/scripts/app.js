@@ -1,6 +1,7 @@
 
 $(document).ready(function () {
   //////////////////////////////////////////////////////////
+  let statusCheck = 0;
   const loginCheck = () => {
     if (!document.cookie) {
       $(`.user-logged-out`).css("display", "flex")
@@ -26,13 +27,15 @@ $(document).ready(function () {
   ////////////////////////////////////////////////////
   const gameNotStarted = (gameId) => {
     for (var i = 1; i < 14; i++) {
-      if(document.cookie.split(';')[0].split("=")[1] === $(`.bet-1`).text()){
+      if (document.cookie.split(';')[0].split("=")[1] === $(`.bet-1`).text()) {
         $(`.player-1`).append(`<img id ="${i}" src ="images/${i}C.png")>`)
+        //$(`.player-2`).append(`<img src ="images/blackBack")>`)
         $(`.player-2`).append(`<img id ="${i}" src ="images/blackBack")>`)
       }
-      if(document.cookie.split(';')[0].split("=")[1] === $(`.bet-2`).text()){
-      $(`.player-2`).append(`<img id ="${i}" src ="images/${i}H.png")>`)
-      $(`.player-1`).append(`<img id ="${i}" src ="images/blackBack")>`)
+      if (document.cookie.split(';')[0].split("=")[1] === $(`.bet-2`).text()) {
+        $(`.player-2`).append(`<img id ="${i}" src ="images/${i}H.png")>`)
+        $(`.player-1`).append(`<img id ="${i}" src ="images/blackBack")>`)
+        //$(`.player-1`).append(`<img  src ="images/blackBack")>`)
       }
     }
     $(`.prize-img`).attr("src", `images/${gameId.split("")[0]}D.png`)
@@ -45,11 +48,11 @@ $(document).ready(function () {
   }
   //////////////!
   const prizeCardGenerate = (gameId, prizeCard) => {
-    console.log(gameId,prizeCard)
+    // console.log(gameId, prizeCard)
     $.ajax({
       type: "PUT",
       url: `/games/${gameId}`,
-      data: { prize: prizeCard ,type:"prize"},
+      data: { prize: prizeCard, type: "prize" },
       success: () => {
         // getGameData(document.cookie.split(';')[1].split("=")[1])
       },
@@ -58,20 +61,20 @@ $(document).ready(function () {
     });
   }
   ///////////////////////////////////////////////
-  const splitTurnsData = (turns,prizeCardCheck) => {
+  const splitTurnsData = (turns, prizeCardCheck) => {
     let turnsData = { player1: [], player2: [], player1prize: [], player2prize: [], prize: [] };
     let player1Points = 0;
     let player2Points = 0;
-    let winnerCheck = 0;
+    //let winnerCheck = 0;
     $(`.player-1`).empty();
     $(`.player-2`).empty();
     $(`.player-1-prize`).empty();
     $(`.player-2-prize`).empty();
     turns.forEach((element) => {
-      console.log(element.id)
+      //console.log(element.id)
       turnsData["player1"].push(element.bet1)
       turnsData["player2"].push(element.bet2)
-     if( element["bet1"] != null) {
+      if (element["bet1"] != null) {
         if (element["winner"] === "player1") {
           turnsData["player1prize"].push(element.prize)
         }
@@ -84,8 +87,7 @@ $(document).ready(function () {
         $(`.prize`).data("cardIndex", `${element["prize"]}`)
         winnerCheck = 1;
       }
-      //! /////////////////////////////////
-      //else
+
       if (element["bet1"] == null) {
         $(`.bet-1-img`).attr("src", "images/blackBack")
         $(`.player-1`).data("turn", 1);
@@ -115,18 +117,21 @@ $(document).ready(function () {
       }
       ////////////////////////////////////////////
     })
+    // let checker = 0;
     for (var i = 1; i < 14; i++) {
       if (!turnsData.player1.includes(i) && document.cookie.split(';')[0].split("=")[1] === $(`.bet-1`).text()) {
-       // if(){
-         // $(`.player-1`).append(`<img id ="${i}" src ="images/${i}C.png")>`)
-       // }
-        //if(document.cookie.split(';')[0].split("=")[1] === (`.bet-2`).text()){
-       // $(`.player-2`).append(`<img id ="${i}" src ="images/${i}H.png")>`)
-        //}
+        // if (checker === 0) {
+        //   $(`.player-2`).append(`<img src ="images/blackBack")>`)
+        //   checker = 1;
+        // }
         $(`.player-1`).append(`<img id ="${i}" src ="images/${i}C.png")>`)
         $(`.player-2`).append(`<img id ="${i}" src ="images/blackBack")>`)
       }
       if (!turnsData.player2.includes(i) && document.cookie.split(';')[0].split("=")[1] === $(`.bet-2`).text()) {
+        // if (checker === 0) {
+        //   $(`.player-2`).append(`<img src ="images/blackBack")>`)
+        //   checker = 1;
+        // }
         $(`.player-2`).append(`<img id ="${i}" src ="images/${i}H.png")>`)
         $(`.player-1`).append(`<img id ="${i}" src ="images/blackBack")>`)
       }
@@ -139,38 +144,44 @@ $(document).ready(function () {
         player2Points += turnsData.player2prize[i - 1]
       }
     }
-// if (element["bet2"] == null && element["bet"] == null) {
-        if (prizeCardCheck === 1) {
-          let checker = 0;
-          while (checker === 0) {
-            let prizeCard = Math.floor(Math.random() * 14);
-            if (prizeCard === 0) { prizeCard += 1 }
-            if (!turnsData["prize"].includes(prizeCard)) {
-              $(`.prize-img`).attr("src", `images/${prizeCard}D.png`)
-              $(`.prize`).data("cardIndex", prizeCard)
-              prizeCardGenerate(document.cookie.split(';')[1].split("=")[1], prizeCard);
-              checker = 1;
-              prizeCardCheck=0;
-            }
-          }
+    // if (element["bet2"] == null && element["bet"] == null) {
+    if (prizeCardCheck === 1 && turns.length < 13) {
+      checker = 0;
+      while (checker === 0) {
+        let prizeCard = Math.floor(Math.random() * 14);
+        if (prizeCard === 0) { prizeCard += 1 }
+        if (!turnsData["prize"].includes(prizeCard)) {
+          $(`.prize-img`).attr("src", `images/${prizeCard}D.png`)
+          $(`.prize`).data("cardIndex", prizeCard)
+          prizeCardGenerate(document.cookie.split(';')[1].split("=")[1], prizeCard);
+          checker = 1;
+          prizeCardCheck = 0;
         }
-      // }
+      }
+    }
+
+    // if (turns.length === 13) {
+    //getLeaderboard();
+    // }
+    // }
+    //$(`.prize-card`).data("gameStatus",turns.length)
+    statusCheck = turns.length;
     $(`header .block-2 p`).text(`Total Points - ${player1Points}`)
     $(`footer .block-2 p`).text(`Total Points - ${player2Points}`)
     return turnsData;
   }
   ///////////////////////////////////////////
-  const getGameData = (gameId,prizeCardCheck) => {
+  const getGameData = (gameId, prizeCardCheck) => {
     $.ajax({
       method: "GET",
       url: `games/${gameId}`
     }).done((turns) => {
       //////////////!
-      console.log(turns)
+      // console.log(turns)
       if (!turns.length) {
         gameNotStarted(gameId);
       } else {
-        const gameData = splitTurnsData(turns,prizeCardCheck)
+        const gameData = splitTurnsData(turns, prizeCardCheck)
         console.log(gameData)
       }
     })
@@ -197,10 +208,66 @@ $(document).ready(function () {
       loginCheck()
     })
   }
+
+
+
+
+  const getLeaderboard = () => {
+    $.ajax({
+      method: "GET",
+      url: `/leaders`
+    }).done((leaders) => {
+      //////////////!
+      console.log(leaders)
+      // if (!turns.length) {
+      //   gameNotStarted(gameId);
+      // } else {
+      //   const gameData = splitTurnsData(turns, prizeCardCheck)
+      //   console.log(gameData)
+      // }
+      // $(`.leaderboard tr`).remove();
+      // leaders.forEach((element, index) => {
+      //   let row = $(`<tr>`)
+      // // console.log(element.username)
+      // .append($(`<td>`)).text(index++)
+      //  .append($(`<td>`)).text(element.username)
+      // .append($(`<td>`)).text(element.games_played)
+      // .append($(0
+      //   1
+      //   222222`<td>`)).text(element.games_won)
+      //  .append($(`<td>`)).text(element.games_played - element.games_won)
+
+
+      //  $(`.leaderboard`).append(row)
+
+
+      //  let header = $(`<header>`)
+      //  .append($(`<img src = ${tweet.user.avatars[`small`]}>`))
+      //  .append($(`<h2>`).text(tweet.user.name))
+      //  .append($(`<h3>`).text(tweet.user.handle))
+
+        // row.append(`<td>`).text(index++)
+        // row.append(`<td>${element.username}</td>`)
+        // row.append(`<td>`).text(element.games_played)
+        // row.append(`<td>`).text(element.games_won)
+        // row.append(`<td>`).text(element.games_played - element.games_won)
+
+
+        // row.append(`<td>`).text(index++)
+        // row.append(`<td>`).text(element.username)
+        // row.append(`<td>`).text(element.games_played)
+        // row.append(`<td>`).text(element.games_won)
+        // row.append(`<td>`).text(element.games_played - element.games_won)
+      })
+
+ })
+  }
+
+  getLeaderboard();
   //////////////////////////////////////////////////////////////
   const addNewUser = (user) => {
     $.ajax({
-      type: "PUT",
+      type: "POST",
       url: "/users",
       data: { username: user },
       success: () => {
@@ -259,57 +326,71 @@ $(document).ready(function () {
   $(document).on(`click`, `.player-1 img`, function () {
     if (document.cookie.split(';')[0].split("=")[1] != ($(`.bet-1`).text())) {
       //////////////!
-      alert("Am Watching");
-      return;
+      alert("Stick to your cards");
+      return false;
     }
     let turnCheck = $(`.player-1`).data("turn");
-    console.log(turnCheck)
+    // console.log(turnCheck)
     if (turnCheck === 1) {
-      // $(`.player-1`).data("turn", 0);
-      // $(`.player-2`).data("turn", 1);
-      console.log(turnCheck,"in")
-      console.log(document.cookie.split(';')[1].split("=")[1])
+      $(`.player-1`).data("turn", 0);
+      $(`.player-2`).data("turn", 1);
+      //console.log(turnCheck, "in")
+      //console.log(document.cookie.split(';')[1].split("=")[1])
       //////////////!
       $.ajax({
-
         type: "PUT",
         url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
-        data: { prize: $(`.prize`).data("cardIndex"), bet: $(this).attr("id"),type:"bet1" },
+        data: { prize: $(`.prize`).data("cardIndex"), bet: $(this).attr("id"), type: "bet1" },
         success: () => {
-          console.log("in2")
-          getGameData(document.cookie.split(';')[1].split("=")[1],0)
+          //console.log("in2")
+          getGameData(document.cookie.split(';')[1].split("=")[1], 0)
         },
         error: () => {
-          getGameData(document.cookie.split(';')[1].split("=")[1],0)
+          //getGameData(document.cookie.split(';')[1].split("=")[1], 0)
         },
       });
     } else {
-      alert("Wait")
+      alert("Not your turn")
     }
   });
   $(document).on(`click`, `.player-2 img`, function () {
+
     if (document.cookie.split(';')[0].split("=")[1] != ($(`.bet-2`).text())) {
-      alert("Am Watching");
-      return;
+      alert("Stick to your cards");
+      return false;
     }
     let turnCheck = $(`.player-2`).data("turn");
+    //let statusCheck = $(`.prize-card`).data("gameStatus");
     if (turnCheck === 1) {
-      // $(`.player-2`).data("turn", 0);
-      // $(`.player-1`).data("turn", 1);
+      $(`.player-2`).data("turn", 0);
+      $(`.player-1`).data("turn", 1);
+      //console.log(statusCheck);
+      let status = "active"
+      if (statusCheck === 13) { status = "done" }
       $.ajax({
         type: "PUT",
         url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
-        data: { prize: $(`.prize`).data("cardIndex"), bet: $(this).attr("id"),type:"bet2" },
+        data: {
+          prize: $(`.prize`).data("cardIndex"),
+          bet: $(this).attr("id"), type: "bet2",
+          status: status
+        },
         success: () => {
-          getGameData(document.cookie.split(';')[1].split("=")[1],1)
+          getGameData(document.cookie.split(';')[1].split("=")[1], 1)
         },
         error: () => {
         },
       });
     } else {
-      alert("Wait")
+      alert("Not your turn")
     }
+
+
   });
+
+
+
+
   loginCheck();
   getUserInfo(document.cookie.split(';')[0].split("=")[1])
 })
