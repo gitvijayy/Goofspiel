@@ -47,7 +47,7 @@ $(document).ready(function () {
   const prizeCardGenerate = (gameId, prizeCard) => {
     console.log(gameId,prizeCard)
     $.ajax({
-      type: "POST",
+      type: "PUT",
       url: `/games/${gameId}`,
       data: { prize: prizeCard ,type:"prize"},
       success: () => {
@@ -200,7 +200,7 @@ $(document).ready(function () {
   //////////////////////////////////////////////////////////////
   const addNewUser = (user) => {
     $.ajax({
-      type: "POST",
+      type: "PUT",
       url: "/users",
       data: { username: user },
       success: () => {
@@ -217,7 +217,7 @@ $(document).ready(function () {
   ////////////////////////////////////////////////////////////
   const newGame = (user) => {
     $.ajax({
-      type: "POST",
+      type: "PUT",
       url: "/games",
       data: { username: user },
       success: () => {
@@ -272,7 +272,7 @@ $(document).ready(function () {
       //////////////!
       $.ajax({
 
-        type: "POST",
+        type: "PUT",
         url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
         data: { prize: $(`.prize`).data("cardIndex"), bet: $(this).attr("id"),type:"bet1" },
         success: () => {
@@ -297,7 +297,7 @@ $(document).ready(function () {
       // $(`.player-2`).data("turn", 0);
       // $(`.player-1`).data("turn", 1);
       $.ajax({
-        type: "POST",
+        type: "PUT",
         url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
         data: { prize: $(`.prize`).data("cardIndex"), bet: $(this).attr("id"),type:"bet2" },
         success: () => {
