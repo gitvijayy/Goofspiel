@@ -72,7 +72,7 @@ module.exports = (knex) => {
           .where('id', results[0].id)
           .update({'bet2':req.body.bet, 'winner':winner, 'points':points})
           .then((result) => {
-            if (req.body.status!== 'done'){ // keep executing following block of code if done
+            if (req.body.status!== 'done'){ 
               res.status(200).send()
             }
           }); 

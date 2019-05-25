@@ -5,15 +5,6 @@ const router  = express.Router();
 
 module.exports = (knex) => {
 
-  //testing if data being retrieved -- to be removed before project submission
-  // router.get("/", (req, res) => {
-  //   knex('users')
-  //     .select('*')
-  //     .then((results) => {
-  //       res.json(results);
-  //     });
-  // });
-
   // insert username to database when put request to /users/
   router.put("/", (req, res) => {
     knex('users')
@@ -21,12 +12,10 @@ module.exports = (knex) => {
       .then(res.status(200).send())
       .catch(
         function(error) {
-          //res.status(500).json({error});
-          res.status(500).send();
+          console.error(error);
         }
       );
   });
-
 
   // on get requests to /users/:username  -> return all data in games table where player1 or player2 = username
   // missing: information for leaderboard

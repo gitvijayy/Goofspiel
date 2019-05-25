@@ -54,13 +54,15 @@ app.get('/leaders', (req, res) =>{
   });
 })
 
-// Home page
-// app.get("/", (req, res) => {
-
-//   res.render("index");
-// //check for cookie, if cookie then redirect to users/:userid
-
-// });
+app.get('/archives', (req, res) =>{
+  knex('games')
+  .select('*')
+  .where('player1', req.body.username)
+  .orWhere('player2', req.body.username)
+  .then((results) => {
+    res.json(results);
+  });
+})
 
 
 
