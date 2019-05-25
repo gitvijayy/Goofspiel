@@ -14,7 +14,6 @@ $(document).ready(function () {
     }
   }
   ///////////////////////////////////////////////////////
-
   const flipGameBoard = () => {
     $(`.player-1`).empty();
     $(`.player-2`).empty();
@@ -30,7 +29,6 @@ $(document).ready(function () {
       if(document.cookie.split(';')[0].split("=")[1] === $(`.bet-1`).text()){
         $(`.player-1`).append(`<img id ="${i}" src ="images/${i}C.png")>`)
         $(`.player-2`).append(`<img id ="${i}" src ="images/blackBack")>`)
-
       }
       if(document.cookie.split(';')[0].split("=")[1] === $(`.bet-2`).text()){
       $(`.player-2`).append(`<img id ="${i}" src ="images/${i}H.png")>`)
@@ -45,7 +43,6 @@ $(document).ready(function () {
     ////////////////////////////////////////////////
     $(`.player-1`).data("turn", 1);
   }
-
   //////////////!
   const prizeCardGenerate = (gameId, prizeCard) => {
     console.log(gameId,prizeCard)
@@ -62,13 +59,7 @@ $(document).ready(function () {
   }
   ///////////////////////////////////////////////
   const splitTurnsData = (turns,prizeCardCheck) => {
-
-
-
-
-
     let turnsData = { player1: [], player2: [], player1prize: [], player2prize: [], prize: [] };
-
     let player1Points = 0;
     let player2Points = 0;
     let winnerCheck = 0;
@@ -80,7 +71,6 @@ $(document).ready(function () {
       console.log(element.id)
       turnsData["player1"].push(element.bet1)
       turnsData["player2"].push(element.bet2)
-
      if( element["bet1"] != null) {
         if (element["winner"] === "player1") {
           turnsData["player1prize"].push(element.prize)
@@ -89,22 +79,12 @@ $(document).ready(function () {
           turnsData["player2prize"].push(element.prize)
         }
       }
-
-
-
-
       if (element["winner"] == null && element["bet2"] == null && element["bet1"] != null) {
         $(`.prize-img`).attr("src", `images/${element["prize"]}D.png`)
         $(`.prize`).data("cardIndex", `${element["prize"]}`)
         winnerCheck = 1;
       }
-
-
       //! /////////////////////////////////
-
-
-
-
       //else
       if (element["bet1"] == null) {
         $(`.bet-1-img`).attr("src", "images/blackBack")
@@ -132,28 +112,17 @@ $(document).ready(function () {
         $(`.bet-2-img`).attr("src", "images/blackBack")
         $(`header .block-1 h1`).text("PLACE A BET")
         $(`footer .block-1 h1`).text("WAIT")
-
       }
-
-
-
       ////////////////////////////////////////////
     })
     for (var i = 1; i < 14; i++) {
       if (!turnsData.player1.includes(i) && document.cookie.split(';')[0].split("=")[1] === $(`.bet-1`).text()) {
-
        // if(){
          // $(`.player-1`).append(`<img id ="${i}" src ="images/${i}C.png")>`)
-
-
        // }
         //if(document.cookie.split(';')[0].split("=")[1] === (`.bet-2`).text()){
        // $(`.player-2`).append(`<img id ="${i}" src ="images/${i}H.png")>`)
-
         //}
-
-
-
         $(`.player-1`).append(`<img id ="${i}" src ="images/${i}C.png")>`)
         $(`.player-2`).append(`<img id ="${i}" src ="images/blackBack")>`)
       }
@@ -170,7 +139,6 @@ $(document).ready(function () {
         player2Points += turnsData.player2prize[i - 1]
       }
     }
-
 // if (element["bet2"] == null && element["bet"] == null) {
         if (prizeCardCheck === 1) {
           let checker = 0;
@@ -187,26 +155,16 @@ $(document).ready(function () {
           }
         }
       // }
-
-
-
-
     $(`header .block-2 p`).text(`Total Points - ${player1Points}`)
     $(`footer .block-2 p`).text(`Total Points - ${player2Points}`)
-
     return turnsData;
   }
-
   ///////////////////////////////////////////
   const getGameData = (gameId,prizeCardCheck) => {
-
-
-
     $.ajax({
       method: "GET",
       url: `games/${gameId}`
     }).done((turns) => {
-
       //////////////!
       console.log(turns)
       if (!turns.length) {
@@ -217,9 +175,6 @@ $(document).ready(function () {
       }
     })
   }
-
-
-
   /////////////////////////////////////////////////////////////
   const getUserInfo = (user) => {
     $.ajax({
@@ -267,13 +222,11 @@ $(document).ready(function () {
       data: { username: user },
       success: () => {
         getUserInfo(user)
-
       },
       error: () => {
       },
     });
   }
-
   /////////////////////////////////////////////////////////
   $(document).on(`click`, `.user-submit`, function () {
     if ($(`.username`).val().trim()) {
@@ -285,7 +238,6 @@ $(document).ready(function () {
   //////////////////////////////////////////////////////////////
   $(document).on(`click`, `.new-game`, function () {
     newGame(document.cookie.split(';')[0].split("=")[1])
-
   })
   ///////////////////////////////////////////////////////////////////
   $(document).on(`click`, `main .block-1 p`, function () {
@@ -311,25 +263,23 @@ $(document).ready(function () {
       return;
     }
     let turnCheck = $(`.player-1`).data("turn");
-    //console.log(turnCheck)
+    console.log(turnCheck)
     if (turnCheck === 1) {
       // $(`.player-1`).data("turn", 0);
       // $(`.player-2`).data("turn", 1);
+      console.log(turnCheck,"in")
+      console.log(document.cookie.split(';')[1].split("=")[1])
       //////////////!
       $.ajax({
         type: "PUT",
         url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
         data: { prize: $(`.prize`).data("cardIndex"), bet: $(this).attr("id"),type:"bet1" },
         success: () => {
-
           getGameData(document.cookie.split(';')[1].split("=")[1],0)
-
-
         },
         error: () => {
         },
       });
-
     } else {
       alert("Wait")
     }
@@ -348,12 +298,7 @@ $(document).ready(function () {
         url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
         data: { prize: $(`.prize`).data("cardIndex"), bet: $(this).attr("id"),type:"bet2" },
         success: () => {
-
-
-
-
           getGameData(document.cookie.split(';')[1].split("=")[1],1)
-
         },
         error: () => {
         },
@@ -362,7 +307,6 @@ $(document).ready(function () {
       alert("Wait")
     }
   });
-
   loginCheck();
   getUserInfo(document.cookie.split(';')[0].split("=")[1])
 })
