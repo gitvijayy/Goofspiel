@@ -87,10 +87,6 @@ module.exports = (knex) => {
               .update({ 'bet1': req.body.bet, prize: req.body.prize, games_id: req.params.gameid })
               .then(res.status(200).send());
           }
-
-
-
-
         } else {
           knex('turns')
             .where('id', results)

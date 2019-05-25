@@ -160,9 +160,9 @@ $(document).ready(function () {
       }
     }
 
-    // if (turns.length === 13) {
-    //getLeaderboard();
-    // }
+    if (turns.length === 13) {
+    getLeaderboard();
+    }
     // }
     //$(`.prize-card`).data("gameStatus",turns.length)
     statusCheck = turns.length;
@@ -210,60 +210,48 @@ $(document).ready(function () {
   }
 
 
-
-
   const getLeaderboard = () => {
     $.ajax({
       method: "GET",
       url: `/leaders`
     }).done((leaders) => {
-      //////////////!
-      console.log(leaders)
-      // if (!turns.length) {
-      //   gameNotStarted(gameId);
-      // } else {
-      //   const gameData = splitTurnsData(turns, prizeCardCheck)
-      //   console.log(gameData)
-      // }
-      // $(`.leaderboard tr`).remove();
-      // leaders.forEach((element, index) => {
-      //   let row = $(`<tr>`)
-      // // console.log(element.username)
-      // .append($(`<td>`)).text(index++)
-      //  .append($(`<td>`)).text(element.username)
-      // .append($(`<td>`)).text(element.games_played)
-      // .append($(0
-      //   1
-      //   222222`<td>`)).text(element.games_won)
-      //  .append($(`<td>`)).text(element.games_played - element.games_won)
-
-
-      //  $(`.leaderboard`).append(row)
-
-
-      //  let header = $(`<header>`)
-      //  .append($(`<img src = ${tweet.user.avatars[`small`]}>`))
-      //  .append($(`<h2>`).text(tweet.user.name))
-      //  .append($(`<h3>`).text(tweet.user.handle))
-
-        // row.append(`<td>`).text(index++)
-        // row.append(`<td>${element.username}</td>`)
-        // row.append(`<td>`).text(element.games_played)
-        // row.append(`<td>`).text(element.games_won)
-        // row.append(`<td>`).text(element.games_played - element.games_won)
-
-
-        // row.append(`<td>`).text(index++)
-        // row.append(`<td>`).text(element.username)
-        // row.append(`<td>`).text(element.games_played)
-        // row.append(`<td>`).text(element.games_won)
-        // row.append(`<td>`).text(element.games_played - element.games_won)
+      $(`.leaderboard tr`).remove();
+      leaders.forEach((element, index) => {
+        $(`.leaderboard`)
+          .append($(`<tr>
+        <td>${index++}</td>
+        <td>${element.username}</td>
+        <td>${element.games_played}</td>
+        <td>${element.games_won}</td>
+        <td>${element.games_played - element.games_won}</td>
+        </tr>`))
       })
-
- })
+    })
   }
+///////////////////////////////////////////////////////
+  const getArchives = (username) => {
+    $.ajax({
+      method: "GET",
+      url: `/archives`,
+      data: {username:username}
+    }).done((archives) => {
+      console.log(archives)
+      $(`.archives tr`).remove();
+      // leaders.forEach((element, index) => {
+        // $(`.archives`)
+        //   .append($(`<tr>
+        // <td>${index++}</td>
+        // <td>${element.username}</td>
+        // <td>${element.games_played}</td>
+        // <td>${element.games_won}</td>
+        // <td>${element.games_played - element.games_won}</td>
+        // </tr>`))
+      // })
+    })
+  }
+//////////////////////////////////////////////////////////////
+getArchives(document.cookie.split(';')[0].split("=")[1])
 
-  getLeaderboard();
   //////////////////////////////////////////////////////////////
   const addNewUser = (user) => {
     $.ajax({
@@ -392,5 +380,6 @@ $(document).ready(function () {
 
 
   loginCheck();
+  getLeaderboard();
   getUserInfo(document.cookie.split(';')[0].split("=")[1])
 })
