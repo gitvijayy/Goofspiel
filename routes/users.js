@@ -15,7 +15,7 @@ module.exports = (knex) => {
   // });
 
   // insert username to database when put request to /users/
-  router.put("/", (req, res) => {
+  router.post("/", (req, res) => {
     knex('users')
       .insert({username: req.body.username})
       .then(res.status(200).send())

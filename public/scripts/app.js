@@ -47,7 +47,7 @@ $(document).ready(function () {
   const prizeCardGenerate = (gameId, prizeCard) => {
     console.log(gameId,prizeCard)
     $.ajax({
-      type: "PUT",
+      type: "POST",
       url: `/games/${gameId}`,
       data: { prize: prizeCard ,type:"prize"},
       success: () => {
@@ -200,7 +200,7 @@ $(document).ready(function () {
   //////////////////////////////////////////////////////////////
   const addNewUser = (user) => {
     $.ajax({
-      type: "PUT",
+      type: "POST",
       url: "/users",
       data: { username: user },
       success: () => {
@@ -217,7 +217,7 @@ $(document).ready(function () {
   ////////////////////////////////////////////////////////////
   const newGame = (user) => {
     $.ajax({
-      type: "PUT",
+      type: "POST",
       url: "/games",
       data: { username: user },
       success: () => {
@@ -271,13 +271,16 @@ $(document).ready(function () {
       console.log(document.cookie.split(';')[1].split("=")[1])
       //////////////!
       $.ajax({
-        type: "PUT",
+
+        type: "POST",
         url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
         data: { prize: $(`.prize`).data("cardIndex"), bet: $(this).attr("id"),type:"bet1" },
         success: () => {
+          console.log("in2")
           getGameData(document.cookie.split(';')[1].split("=")[1],0)
         },
         error: () => {
+          getGameData(document.cookie.split(';')[1].split("=")[1],0)
         },
       });
     } else {
@@ -294,7 +297,7 @@ $(document).ready(function () {
       // $(`.player-2`).data("turn", 0);
       // $(`.player-1`).data("turn", 1);
       $.ajax({
-        type: "PUT",
+        type: "POST",
         url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
         data: { prize: $(`.prize`).data("cardIndex"), bet: $(this).attr("id"),type:"bet2" },
         success: () => {
