@@ -47,15 +47,14 @@ app.use("/users", usersRoutes(knex));
 app.use("/games", gamesRoutes(knex));
 
 app.get('/leaders', (req, res) =>{
-  knex('users')
-  .select('*')
+  knex
+  .raw('SELECT *, CAST(games_won AS float)/ games_played AS winrate FROM users WHERE games_played != 0 ORDER BY winrate DESC')
   .then((results) => {
-    res.json(results);
+    res.json(results.rows);
   });
 })
 
 app.get('/archives/:username', (req, res) =>{
-
   knex('games')
   .select('*')
   .where('player1', req.params.username)

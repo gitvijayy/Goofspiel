@@ -18,7 +18,7 @@ module.exports = (knex) => {
   });
 
   // on get requests to /users/:username  -> return all data in games table where player1 or player2 = username
-  // missing: information for leaderboard
+
   router.get("/:username", (req, res) => {
     knex('games')
       .select('*')
