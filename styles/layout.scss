@@ -35,10 +35,21 @@ header {
     align-items: center;
   }
 
-  .block-3 {
-    background-image: url(https://cdn.dribbble.com/users/189524/screenshots/1953501/01-aces_v2.gif);
+  // .block-3 {
+  //   background-image: url(https://cdn.dribbble.com/users/189524/screenshots/1953501/01-aces_v2.gif);
+  //   background-size: contain;
+  // }
+}
+
+.bg-rolling-gif {
+  background-image: url(https://cdn.dribbble.com/users/189524/screenshots/1953501/01-aces_v2.gif);
     background-size: contain;
-  }
+}
+
+.bg-prize-cards {
+  background-image: url(https://www.setaswall.com/wp-content/uploads/2018/02/Green-Background-14-1024x768.png);
+    background-size: cover;
+
 }
 
 main {
@@ -76,6 +87,8 @@ main {
         margin-top: 15px;
       }
       .bet-2 {
+        margin-bottom: 0px;
+        margin-top: 16px;
       }
     }
     .hide-display {
