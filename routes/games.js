@@ -5,9 +5,10 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (knex) => {
-  //on put request to /games check (create new game) if any games missing player2, and if user already in a game waiting for player2
-  //if game found waiting for player2 where player1 is not user, update database with player2
-  //if game not found with missing player2 or if only game missing player2 is current user's game, create another new game
+  
+  //on put request to /games (create new game) check if any games missing player2 that wasn't created by the user
+  //if game found, update database with player2 = username
+  //if game not found, create another new game
   router.put('/', (req, res) => {
     knex
       .select('id')
@@ -33,7 +34,7 @@ module.exports = (knex) => {
       );
   });
 
-  //on get request to /games/:gameid - retrieve all turn info related to the game
+  //on get request to /games/:gameid - retrieve all turns info related to the game
   router.get('/:gameid', (req, res) => {
     knex
       .select('*')
@@ -44,12 +45,58 @@ module.exports = (knex) => {
       });
   });
 
-  //on put request to /games/:gameid (submitting turn information) - enter new information into turns
-  //Find all turns with gameid, if there's an entry with no bet2, that turn's unfinished, put bet into bet2
-  //After bet2 is updated with new value, turn is finished - calculate winner & points won
+  //on put request to /games/:gameid (submitting turn information)
+  // - enter new information into turns, calculate winner for the turn
+  // - when game is done, count all points of both players and determine who won
+  // - update games table winner column and username table games_played games_won column
   router.put('/:gameid', (req, res) => {
+    ///////////////////// new refactor code//////////////////
+  //on game begins, client sends prize card, game id info
+  // if (req.body.type !== 'bet1' && req.body.type !== 'bet2'){
+  //   console.log('if loop for not bet1 bet2 type triggered')
+  //   knex('turns')
+  //   .insert({ games_id: req.params.gameid, prize: req.body.prize})
+  //   .then(res.status(200).send());
+  // //after game starts, all put request from player submitting a card will be attached with type of bet1 or bet2    
+  // } else if (req.body.type === 'bet1') {
+  //   console.log('if loop for bet1 type triggered')
+  //   knex('turns')
+  //     .where('games_id', req.params.gameid)
+  //     .update({'bet1': req.body.bet})
+  //     .then(res.status(200).send());
+  // } else if (req.body.type === 'bet2'){
+  //   console.log('if loop for bet2 type triggered')
+  //   knex('turns')
+  //     .select('id', 'bet1', 'prize')
+  //     .where('games_id', req.params.gameid)
+  //     .whereNull('bet2')
+  //     .then((results) => {
+  //       let winner = '';
+  //       let points = results[0].prize;
+  //       //Caluculating who wins the turn
+  //       if (results[0].bet1 > req.body.bet) {
+  //         winner = 'player1'
+  //       } else if (results[0].bet1 < req.body.bet) {
+  //         winner = 'player2'
+  //       } else {
+  //         winner = null;
+  //         points = 0;
+  //       }
+  //       //Updating the turns with calculated results
+  //       knex('turns')
+  //         .where('id', results[0].id)
+  //         .update({ 'bet2': req.body.bet, 'winner': winner, 'points': points })
+  //         .then(() => {
+  //           if (req.body.status !== 'done') {
+  //             res.status(200).send()
+  //           }
+  //         });
+  //     })
+  // } 
+  /////////////////////////////////
 
 
+  ////////////////////////// original working code //////////////////////
     knex('turns')
       .select('id', 'bet1', 'prize')
       .where('games_id', req.params.gameid)
