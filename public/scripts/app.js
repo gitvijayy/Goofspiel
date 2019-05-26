@@ -4,9 +4,18 @@ $(document).ready(function () {
   let statusCheck = 0;
 
 
+var socket = io.connect("http://localhost:8080")
 
+socket.on('gameplay',(data)=>{
+  if($(`.player-2`).text() === data.player2
+  && $(`.player-1`).text() === data.player1 &&
+  document.cookie.split(';')[1].split("=")[1] === data.gameID){
+    console.log("1,in")
+    getGameData(data.gameID,0)
 
+  }
 
+})
 
 
   const loginCheck = () => {
@@ -342,12 +351,37 @@ console.log("sorted",turns)
     getGameData(gameId,0)
   })
   /////////////////////////////////////////////////////////
+
+  // const socketForGameplay = () => {
+  //   socket.emit('gameplay',{
+  //     gameID: document.cookie.split(';')[1].split("=")[1],
+  //     player1: $(`.player-1`).text(),
+  //     player2: $(`.player-2`).text()
+  //   })
+  //   socket.on('gameplay',(data)=>{
+  //     if($(`.player-2`).text() === data.player2
+  //     && $(`.player-1`).text() === data.player1 &&
+  //     document.cookie.split(';')[1].split("=")[1] === data.gameID){
+  //       console.log("in")
+  //       getGameData(data.gameID,0)
+
+  //     }
+
+  //   })
+  // }
+
+
+
   $(document).on(`click`, `.player-1 img`, function () {
     if (document.cookie.split(';')[0].split("=")[1] != ($(`.bet-1`).text())) {
       //////////////!
       alert("Stick to your cards");
       return false;
     }
+
+
+
+
     let turnCheck = $(`.player-1`).data("turn");
      console.log("turn",turnCheck)
     if (turnCheck === 1) {
@@ -362,15 +396,32 @@ console.log("sorted",turns)
         data: { prize: $(`.prize`).data("cardIndex"), bet: $(this).attr("id"), type: "bet1" },
         success: () => {
           //console.log("in2")
-          getGameData(document.cookie.split(';')[1].split("=")[1], 0)
+          //getGameData(document.cookie.split(';')[1].split("=")[1], 0)
+
+//socketForGameplay();
+socket.emit('gameplay',{
+  gameID: document.cookie.split(';')[1].split("=")[1],
+  player1: $(`.player-1`).text(),
+  player2: $(`.player-2`).text()
+})
+
+
+
+
+
         },
         error: () => {
           //getGameData(document.cookie.split(';')[1].split("=")[1], 0)
         },
       });
+
+
     } else {
       alert("Not your turn")
     }
+
+
+
   });
   $(document).on(`click`, `.player-2 img`, function () {
 
@@ -395,7 +446,26 @@ console.log("sorted",turns)
           status: status
         },
         success: () => {
-          getGameData(document.cookie.split(';')[1].split("=")[1], 1)
+         // getGameData(document.cookie.split(';')[1].split("=")[1], 1)
+         //socketForGameplay();
+         socket.emit('gameplay',{
+          gameID: document.cookie.split(';')[1].split("=")[1],
+          player1: $(`.player-1`).text(),
+          player2: $(`.player-2`).text()
+        })
+        socket.on('gameplay',(data)=>{
+          if($(`.player-2`).text() === data.player2
+          && $(`.player-1`).text() === data.player1 &&
+          document.cookie.split(';')[1].split("=")[1] === data.gameID){
+            console.log("2,in")
+            getGameData(data.gameID,1)
+
+          }
+
+        })
+
+
+
         },
         error: () => {
         },

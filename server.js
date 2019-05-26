@@ -80,5 +80,9 @@ var server = app.listen(PORT, () => {
 var io = socket(server)
 
 io.on('connection',function(socket){
-  console.log("socket connected")
+  console.log("socket connected",socket.id)
+
+  socket.on('gameplay',(data)=>{
+io.sockets.emit('gameplay',data)
+  })
 })
