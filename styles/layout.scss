@@ -31,8 +31,12 @@ header {
   }
   .block-2 {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
+    img {
+      //margin-left: 0.5em;
+      padding:  0.3em;
+    }
   }
 
   // .block-3 {
@@ -47,9 +51,9 @@ header {
 }
 
 .bg-prize-cards {
-  background-image: url(https://www.setaswall.com/wp-content/uploads/2018/02/Green-Background-14-1024x768.png);
+   background-image: url(https://ak4.picdn.net/shutterstock/videos/4688984/thumb/3.jpg);
     background-size: cover;
-
+//background-color: whitesmoke
 }
 
 main {
@@ -73,11 +77,18 @@ main {
 
     article {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: center;
       align-items: center;
+
     }
+
+    img {
+      margin-right: 5px;
+    }
+
     .prize-card {
       flex-direction: column;
+
       .bet-1 {
         margin-bottom: 0px;
         margin-top: 16px;
@@ -86,10 +97,10 @@ main {
         margin-bottom: 15px;
         margin-top: 15px;
       }
-      .bet-2 {
-        margin-bottom: 0px;
-        margin-top: 16px;
-      }
+      // .bet-2 {
+      //   margin-bottom: 0px;
+      //   margin-top: 16px;
+      // }
     }
     .hide-display {
       visibility: hidden;
@@ -159,8 +170,11 @@ footer {
   }
   .block-2 {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
+    img {
+      padding: 0.5em;
+    }
   }
 
   .block-3 {

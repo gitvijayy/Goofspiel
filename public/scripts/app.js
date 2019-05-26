@@ -22,6 +22,8 @@ $(document).ready(function () {
     $(`.player-2-turn`).empty();
     $(`.player-1-turn`).empty()
     $(`.player-2-turn`).empty()
+    $(`.player-1-prize`).empty();
+    $(`.player-2-prize`).empty();
     $(`main .block-2 article`).removeClass(`hide-display`)
   }
   ////////////////////////////////////////////////////
@@ -70,6 +72,7 @@ $(document).ready(function () {
     $(`.player-2`).empty();
     $(`.player-1-prize`).empty();
     $(`.player-2-prize`).empty();
+    console.log(turns)
     turns.forEach((element) => {
       //console.log(element.id)
       turnsData["player1"].push(element.bet1)
@@ -83,12 +86,14 @@ $(document).ready(function () {
         }
       }
       if (element["winner"] == null && element["bet2"] == null && element["bet1"] != null) {
+        console.log(0)
         $(`.prize-img`).attr("src", `images/${element["prize"]}D.png`)
         $(`.prize`).data("cardIndex", `${element["prize"]}`)
         winnerCheck = 1;
       }
 
-      if (element["bet1"] == null) {
+      if (element["bet1"] == null ) {
+        console.log(11)
         $(`.bet-1-img`).attr("src", "images/blackBack")
         $(`.player-1`).data("turn", 1);
         $(`.player-2`).data("turn", 0);
@@ -96,20 +101,23 @@ $(document).ready(function () {
         $(`footer .block-1 h1`).text("WAIT")
         $(`.prize-img`).attr("src", `images/${element["prize"]}D.png`)
         $(`.prize`).data("cardIndex", `${element["prize"]}`)
-        // $(`.player-2`).attr("turnA", 1);
+         $(`.player-2`).attr("turnA", 1);
       }
-      else if (element["bet2"] == null) {
+      else if (element["bet2"] == null ) {
+        console.log(22)
         $(`.bet-1-img`).attr("src", `images/${element["bet1"]}C.png`)
         $(`.player-2`).data("turn", 1);
         $(`.player-1`).data("turn", 0);
         $(`header .block-1 h1`).text("WAIT")
         $(`footer .block-1 h1`).text("PLACE A BET")
-        // $(`.player-2`).attr("turnA", 1);
-      } else {
+         $(`.player-2`).attr("turnA", 1);
+      }
+      else {
+        console.log(33)
         turnsData["prize"].push(element.prize)
         $(`.player-1`).data("turn", 1);
         $(`.player-2`).data("turn", 0);
-        //$(`.player-1`).attr("turnA", 1);
+        $(`.player-1`).attr("turnA", 1);
         $(`.bet-1-img`).attr("src", "images/blackBack")
         $(`.bet-2-img`).attr("src", "images/blackBack")
         $(`header .block-1 h1`).text("PLACE A BET")
@@ -146,7 +154,7 @@ $(document).ready(function () {
     }
     // if (element["bet2"] == null && element["bet"] == null) {
     if (prizeCardCheck === 1 && turns.length < 13) {
-      checker = 0;
+      let checker = 0;
       while (checker === 0) {
         let prizeCard = Math.floor(Math.random() * 14);
         if (prizeCard === 0) { prizeCard += 1 }
@@ -160,14 +168,14 @@ $(document).ready(function () {
       }
     }
 
-    if (turns.length === 13) {
-    getLeaderboard();
-    }
+    // if (turns.length === 13) {
+    // getLeaderboard();
+    // }
     // }
     //$(`.prize-card`).data("gameStatus",turns.length)
     statusCheck = turns.length;
-    $(`header .block-2 p`).text(`Total Points - ${player1Points}`)
-    $(`footer .block-2 p`).text(`Total Points - ${player2Points}`)
+    $(`header .block-2`).prepend(`<p class="btn btn-dark btn-lg" ">Total Points - ${player1Points}</p>`)
+    $(`footer .block-2`).prepend(`<p class="btn btn-dark btn-lg" >Total Points - ${player2Points}</p>`)
     return turnsData;
   }
   ///////////////////////////////////////////
@@ -187,7 +195,7 @@ $(document).ready(function () {
     })
   }
   /////////////////////////////////////////////////////////////
-  const getUserInfo = (user) => {
+  const getActiveGames = (user) => {
     $.ajax({
       method: "GET",
       url: `users/${user}`
@@ -251,7 +259,7 @@ $(document).ready(function () {
     })
   }
 //////////////////////////////////////////////////////////////
-getArchives(document.cookie.split(';')[0].split("=")[1])
+
 
   //////////////////////////////////////////////////////////////
   const addNewUser = (user) => {
@@ -261,11 +269,11 @@ getArchives(document.cookie.split(';')[0].split("=")[1])
       data: { username: user },
       success: () => {
         document.cookie = `username=${$(".username").val()}`
-        getUserInfo(user)
+        getActiveGames(user)
       },
       error: () => {
         document.cookie = `username=${$(".username").val()}`
-        getUserInfo(user)
+        getActiveGames(user)
       },
       // dataType: dataType
     });
@@ -277,7 +285,7 @@ getArchives(document.cookie.split(';')[0].split("=")[1])
       url: "/games",
       data: { username: user },
       success: () => {
-        getUserInfo(user)
+        getActiveGames(user)
       },
       error: () => {
       },
@@ -319,10 +327,10 @@ getArchives(document.cookie.split(';')[0].split("=")[1])
       return false;
     }
     let turnCheck = $(`.player-1`).data("turn");
-    // console.log(turnCheck)
+     console.log("turn",turnCheck)
     if (turnCheck === 1) {
-      $(`.player-1`).data("turn", 0);
-      $(`.player-2`).data("turn", 1);
+      // $(`.player-1`).data("turn", 0);
+      // $(`.player-2`).data("turn", 1);
       //console.log(turnCheck, "in")
       //console.log(document.cookie.split(';')[1].split("=")[1])
       //////////////!
@@ -351,8 +359,8 @@ getArchives(document.cookie.split(';')[0].split("=")[1])
     let turnCheck = $(`.player-2`).data("turn");
     //let statusCheck = $(`.prize-card`).data("gameStatus");
     if (turnCheck === 1) {
-      $(`.player-2`).data("turn", 0);
-      $(`.player-1`).data("turn", 1);
+      // $(`.player-2`).data("turn", 0);
+      // $(`.player-1`).data("turn", 1);
       //console.log(statusCheck);
       let status = "active"
       if (statusCheck === 13) { status = "done" }
@@ -381,6 +389,14 @@ getArchives(document.cookie.split(';')[0].split("=")[1])
 
 
   loginCheck();
-  getLeaderboard();
-  getUserInfo(document.cookie.split(';')[0].split("=")[1])
+  //getLeaderboard();
+  //getArchives(document.cookie.split(';')[0].split("=")[1])
+  getActiveGames(document.cookie.split(';')[0].split("=")[1])
+  //( "#foo" ).trigger( "click" )
+  //flipGameBoard()
+  //$(`main .block-1 #${document.cookie.split(';')[1].split("=")[1]}`).trigger(`click`)
+ // console.log(document.cookie.split(';')[1].split("=")[1])
+
+  //getGameData(document.cookie.split(';')[1].split("=")[1],0)
+
 })
