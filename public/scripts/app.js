@@ -101,7 +101,7 @@ $(document).ready(function () {
     $(`.player-2`).empty();
     $(`.player-1-prize`).empty();
     $(`.player-2-prize`).empty();
-   // console.log(turns)
+    // console.log(turns)
     turns.forEach((element, index) => {
       //console.log(element.id)
       turnsData["player1"].push(element.bet1)
@@ -238,11 +238,22 @@ $(document).ready(function () {
       method: "GET",
       url: `/leaders`
     }).done((leaders) => {
-      $(`.leaderboard tr`).remove();
-      leaders.forEach((element, index) => {
-        $(`.leaderboard`)
+      $(`.rules-gops`).css("display","none")
+      $(`.leaderboard-title p`).text("LEADERBOARD")
+      $(`.leaderboard-head th`).remove();
+      $(`.leaderboard-body tr`).remove();
+      $(`.leaderboard-head`)
+        .append($(`<th>Rank</th>
+        <th>User</th>
+        <th>Played</th>
+        <th>Won</th>
+        <th>Lost</th>`))
+
+
+      leaders.forEach((element) => {
+        $(`.leaderboard-body`)
           .append($(`<tr>
-        <td>${index++}</td>
+          <td>${$(`.leaderboard-body tr`).length + 1}</td>
         <td>${element.username}</td>
         <td>${element.games_played}</td>
         <td>${element.games_won}</td>
@@ -258,19 +269,36 @@ $(document).ready(function () {
       method: "GET",
       url: `/archives/${username}`,
       //data: {username: username}
+
     }).done((archives) => {
-      //console.log(2, archives)
-      // $(`.archives tr`).remove();
-      // leaders.forEach((element, index) => {
-      // $(`.archives`)
-      //   .append($(`<tr>
-      // <td>${index++}</td>
-      // <td>${element.username}</td>
-      // <td>${element.games_played}</td>
-      // <td>${element.games_won}</td>
-      // <td>${element.games_played - element.games_won}</td>
-      // </tr>`))
-      // })
+      $(`.rules-gops`).css("display","none")
+      $(`.leaderboard-title p`).text("Games Archive")
+      $(`.leaderboard-head th`).remove();
+      $(`.leaderboard-body tr`).remove();
+      $(`.leaderboard-head`)
+        .append($(`
+        <th>#</th>
+        <th>Game Id</th>
+        <th>Player 1</th>
+        <th>Player 2</th>
+        <th>Winner</th>
+        `))
+
+
+      archives.forEach((element) => {
+        if(element.status ==="done"){
+          $(`.leaderboard-body`)
+          .append($(`<tr>
+          <td>${$(`.leaderboard-body tr`).length + 1}</td>
+        <td>${element.id}</td>
+        <td>${element.player1}</td>
+        <td>${element.player2}</td>
+        <td>${element.winner}</td>
+
+        </tr>`))
+
+        }
+      })
     })
   }
   //////////////////////////////////////////////////////////////
@@ -308,43 +336,59 @@ $(document).ready(function () {
 
 
   $(document).on(`click`, `.leader`, function () {
+    // // modal_archive
+    // // modal_leader
+    // // modal_rules
 
-  getLeaderboard();
+    // ////$(`.modal-boards`).removeClass(`.modal_archive`)
+    // $(`.modal-boards`).removeClass(`.modal_rules`)
+    // $(`.modal-boards`).addClass(`.modal_leader`)
+    getLeaderboard();
 
+  })
 
-  //btn.onclick = function() {
-   $(`#modal-div`).css("display","block");
-  //}
+  $(document).on(`click`, `.archive`, function () {
+//console.log("in")
+    getArchives(document.cookie.split(';')[0].split("=")[1]);
 
-  // When the user clicks on <span> (x), close the modal
+  })
 
-})
+  $(document).on(`click`, `.rules`, function () {
+    //console.log("in")
 
-// $(document).on(`click`, `#modal-close`, function () {
-
-//   getLeaderboard();
-
-
-//   //btn.onclick = function() {
-//    $(`#modal-div`).css("display","block");
-//   //}
-//   $(`#modal-div`).css("display","none");
-//   // When the user clicks on <span> (x), close the modal
-
-// })
-
-
-
-// // When the user clicks anywhere outside of the modal, close it
-// // window.onclick = function(event) {
-// //   if (event.target == modal) {
-// //     modal.style.display = "none";
-// //   }
-// // }
+        $(`.leaderboard-title p`).text("GAMEPLAY RULES")
+      $(`.leaderboard-head th`).remove();
+      $(`.leaderboard-body tr`).remove();
+      $(`.rules-gops`).css("display","block")
 
 
+      })
 
-/////////////////////////////////////////////////////////
+  // $(document).on(`click`, `#modal-close`, function () {
+
+  //   getLeaderboard();
+
+
+  //   //btn.onclick = function() {
+  //    $(`#modal-div`).css("display","block");
+  //   //}
+  //   $(`#modal-div`).css("display","none");
+  //   // When the user clicks on <span> (x), close the modal
+
+  // })
+
+
+
+  // // When the user clicks anywhere outside of the modal, close it
+  // // window.onclick = function(event) {
+  // //   if (event.target == modal) {
+  // //     modal.style.display = "none";
+  // //   }
+  // // }
+
+
+
+  /////////////////////////////////////////////////////////
   $(document).on(`click`, `.user-submit`, function () {
     if ($(`.username`).val().trim()) {
       addNewUser($(`.username`).val())
