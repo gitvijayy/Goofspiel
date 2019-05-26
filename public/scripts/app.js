@@ -14,7 +14,7 @@ $(document).ready(function () {
     })
   }
   socket.on('gameplay', (data) => {
-    console.log($(`.player-2`).text(), $(`.player-1`).text(), data.player2, data.player1, document.cookie.split(';')[1].split("=")[1], data.gameID)
+    //console.log($(`.player-2`).text(), $(`.player-1`).text(), data.player2, data.player1, document.cookie.split(';')[1].split("=")[1], data.gameID)
     if ($(`.player-2`).text() === data.player2
       && $(`.player-1`).text() === data.player1 &&
       document.cookie.split(';')[1].split("=")[1] === data.gameID) {
@@ -92,7 +92,7 @@ $(document).ready(function () {
     turns.sort((a, b) => {
       return a.id - b.id;
     })
-    console.log("sorted", turns)
+    //console.log("sorted", turns)
     let turnsData = { player1: [], player2: [], player1prize: [], player2prize: [], prize: [] };
     let player1Points = 0;
     let player2Points = 0;
@@ -101,7 +101,7 @@ $(document).ready(function () {
     $(`.player-2`).empty();
     $(`.player-1-prize`).empty();
     $(`.player-2-prize`).empty();
-    console.log(turns)
+   // console.log(turns)
     turns.forEach((element, index) => {
       //console.log(element.id)
       turnsData["player1"].push(element.bet1)
@@ -126,7 +126,7 @@ $(document).ready(function () {
       //if (element["bet1"] == null ) {
       if (!element["bet1"]) {
         //console.log(11)
-        console.log(index, "if")
+        //console.log(index, "if")
         $(`.bet-1-img`).attr("src", "images/blackBack")
         $(`.player-1`).data("turn", 1);
         $(`.player-2`).data("turn", 0);
@@ -139,7 +139,7 @@ $(document).ready(function () {
       //else if (element["bet2"] == null ) {
       else if (!element["bet2"]) {
         //console.log(22)
-        console.log(index, "elseif")
+        //console.log(index, "elseif")
         $(`.bet-1-img`).attr("src", `images/${element["bet1"]}C.png`);
         $(`.player-2`).data("turn", 1);
         $(`.player-1`).data("turn", 0);
@@ -149,7 +149,7 @@ $(document).ready(function () {
       }
       else {
         //console.log(33)
-        console.log(index, "else")
+        //console.log(index, "else")
         turnsData["prize"].push(element.prize)
         $(`.player-1`).data("turn", 1);
         $(`.player-2`).data("turn", 0);
@@ -196,13 +196,13 @@ $(document).ready(function () {
   }
   ///////////////////////////////////////////
   const getGameData = (gameId, prizeCardCheck) => {
-    console.log(gameId, "player2")
+    //console.log(gameId, "player2")
     $.ajax({
       method: "GET",
       url: `games/${gameId}`
     }).done((turns) => {
       //////////////!
-      console.log(turns)
+      //console.log(turns)
       if (!turns.length) {
         gameNotStarted(gameId);
       } else {
@@ -253,13 +253,13 @@ $(document).ready(function () {
   }
   ///////////////////////////////////////////////////////
   const getArchives = (username) => {
-    console.log(1, username)
+    //console.log(1, username)
     $.ajax({
       method: "GET",
       url: `/archives/${username}`,
       //data: {username: username}
     }).done((archives) => {
-      console.log(2, archives)
+      //console.log(2, archives)
       // $(`.archives tr`).remove();
       // leaders.forEach((element, index) => {
       // $(`.archives`)
@@ -305,6 +305,46 @@ $(document).ready(function () {
     });
   }
   /////////////////////////////////////////////////////////
+
+
+  $(document).on(`click`, `.leader`, function () {
+
+  getLeaderboard();
+
+
+  //btn.onclick = function() {
+   $(`#modal-div`).css("display","block");
+  //}
+
+  // When the user clicks on <span> (x), close the modal
+
+})
+
+// $(document).on(`click`, `#modal-close`, function () {
+
+//   getLeaderboard();
+
+
+//   //btn.onclick = function() {
+//    $(`#modal-div`).css("display","block");
+//   //}
+//   $(`#modal-div`).css("display","none");
+//   // When the user clicks on <span> (x), close the modal
+
+// })
+
+
+
+// // When the user clicks anywhere outside of the modal, close it
+// // window.onclick = function(event) {
+// //   if (event.target == modal) {
+// //     modal.style.display = "none";
+// //   }
+// // }
+
+
+
+/////////////////////////////////////////////////////////
   $(document).on(`click`, `.user-submit`, function () {
     if ($(`.username`).val().trim()) {
       addNewUser($(`.username`).val())
@@ -320,14 +360,14 @@ $(document).ready(function () {
   $(document).on(`click`, `main .block-1 p`, function () {
     let player1 = $(this).data("player1");
     let player2 = $(this).data("player2");
-    console.log(player1, player2)
+    //console.log(player1, player2)
     // if (player1 == null || player2 == null) {
     if (!player1 || !player2) {
       //////////////!
       alert("Waiting for a player to join the game")
       return false;
     }
-    console.log($(this).attr("id"))
+    //console.log($(this).attr("id"))
     let gameId = $(this).attr("id")
     document.cookie = `gameid=${gameId}`
     flipGameBoard();
@@ -343,7 +383,7 @@ $(document).ready(function () {
       return false;
     }
     let turnCheck = $(`.player-1`).data("turn");
-    console.log("turn", turnCheck)
+    //console.log("turn", turnCheck)
     if (turnCheck === 1) {
       // $(`.player-1`).data("turn", 0);
       // $(`.player-2`).data("turn", 1);
@@ -377,7 +417,9 @@ $(document).ready(function () {
       // $(`.player-1`).data("turn", 1);
       //console.log(handsPlayed);
       let status = "active"
-      if (handsPlayed === 13) { status = "done" }
+      if (handsPlayed === 12) { status = "done" }
+      console.log(handsPlayed)
+      console.log(status)
       $.ajax({
         type: "PUT",
         url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
@@ -398,7 +440,7 @@ $(document).ready(function () {
     }
   });
   loginCheck();
-  //getLeaderboard();
+
   //getArchives(document.cookie.split(';')[0].split("=")[1])
   getActiveGames(document.cookie.split(';')[0].split("=")[1])
   //( "#foo" ).trigger( "click" )

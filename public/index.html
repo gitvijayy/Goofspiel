@@ -10,10 +10,15 @@
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
 
 
-
-
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+  integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script> -->
   <!-- <script type="text/javascript" src="/scripts/new-game.js"></script>
   <script type="text/javascript" src="/scripts/game-play.js"></script> -->
   <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
@@ -37,6 +42,7 @@
 
 
 
+
   <div class="user-logged-in">
     <header class="row">
       <div class="block-1 col-2 bg-warning bg-rolling-gif">
@@ -55,6 +61,31 @@
     </header>
 
     <main class="row">
+
+        <!-- var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0]; -->
+
+
+
+        <!-- <button id="myBtn">Open Modal</button> -->
+
+        <!-- The Modal -->
+        <!-- <div id="modal-div" class="modal"> -->
+
+          <!-- Modal content -->
+          <!-- <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <p>Some text in the Modal..</p>
+          </div>
+
+        </div> -->
+
+
       <div class="block-1 col-1 borders pre-scrollable text-white bg-rolling-gif">
         <h2 class="btn btn-danger btn-lg btn-block ">Active Games</h2>
         <!-- <p class="btn btn-danger btn-lg btn-block">Active Games</p> -->
@@ -63,7 +94,22 @@
 
         <!-- <img style = "position: relative;top: 500px;" src = "images/aces.png">
     <img style = "position: relative;top: 380px;left: 500px;" src = "images/aces.png"> -->
+    <!-- <div class="block-4 col-3 text-black" >
+        <h3 class="btn-danger">LEADERBOARD</h3>
+        <table class="table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>User</th>
+              <th>Played</th>
+              <th>Won</th>
+              <th>Lost</th>
+            </tr>
+          </thead>
+          <tbody class="leaderboard archives">
 
+        </table>
+      </div> -->
 
 
         <article class="player-1 hide-display">
@@ -93,24 +139,9 @@
         <button class="btn btn-success btn-lg btn-block  new-game">New Game</button>
         <button class="btn btn-warning btn-lg btn-block refresh">Refresh</button>
         <button class="btn btn-info btn-lg btn-block archive">Archive</button>
-        <button class="btn btn-danger btn-lg btn-block leader">Leader</button>
+        <button class="btn btn-danger btn-lg btn-block leader" data-toggle="modal" data-target="#exampleModalLong">Leader</button>
       </div>
-      <!-- <div class="block-4 col-3 text-black">
-        <h3 class="btn-danger">LEADERBOARD</h3>
-        <table class="table-bordered table-striped">
-          <thead class="thead-dark">
-            <tr>
-              <th>#</th>
-              <th>User</th>
-              <th>Played</th>
-              <th>Won</th>
-              <th>Lost</th>
-            </tr>
-          </thead>
-          <tbody class="leaderboard archives">
 
-        </table>
-      </div> -->
     </main>
 
     <footer class="row">
@@ -118,6 +149,7 @@
         <h1 class="player-2-turn text-danger"></h1>
       </div>
       <div class="block-2 bg-white col-8 bg-prize-cards player-2-prize">
+
          <!--  -->
         <!-- <p class="btn btn-dark btn-lg" ></p> -->
         <!--  -->
@@ -131,9 +163,7 @@
 
   </div>
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
-  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
+
 
 </body>
 
