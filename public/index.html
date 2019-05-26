@@ -8,6 +8,15 @@
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <!-- Including the following four CDN for bootstrap css and javascript -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+   integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+   integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
 
@@ -21,6 +30,70 @@
 
 <body>
 
+<!-- //////////////////////////////////////////MODAL section/////////////////////// -->
+
+  <div class="modal fade modal_leader" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <h3 class="btn-danger">LEADERBOARD</h3>
+            <table class="table-bordered table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>#</th>
+                  <th>User</th>
+                  <th>Played</th>
+                  <th>Won</th>
+                  <th>Lost</th>
+                </tr>
+              </thead>
+              <tbody class="leaderboard archives">
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="modal fade archive_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <h3 class="btn-danger">LEADERBOARD</h3>
+            <table class="table-bordered table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>#</th>
+                  <th>User</th>
+                  <th>Played</th>
+                  <th>Won</th>
+                  <th>Lost</th>
+                </tr>
+              </thead>
+              <tbody class="leaderboard archives">
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+    
+    
+    <!-- ///////////////////////////Modal section/////////////////// -->
   <div class="user-logged-out vh-100" style="display: flex;justify-content:center;align-items: center">
     <main class="bg-light"
       style="border-radius:10px;width:700px;height:550px;flex-direction:column;display: flex;justify-content:center;align-items: center">
@@ -90,12 +163,15 @@
         </article>
       </div>
       <div class="block-3 col-1 bg-rolling-gif">
-        <button class="btn btn-success btn-lg btn-block  new-game">New Game</button>
+        <button class="btn btn-success btn-lg btn-block new-game">New Game</button>
         <button class="btn btn-warning btn-lg btn-block refresh">Refresh</button>
-        <button class="btn btn-info btn-lg btn-block archive">Archive</button>
-        <button class="btn btn-danger btn-lg btn-block leader">Leader</button>
+        <button class="btn btn-info btn-lg btn-block archive" data-toggle="modal" data-target=".modal_archive">Archive</button>
+        <button  class="btn btn-danger btn-lg btn-block leader" data-toggle="modal" data-target=".modal_leader">Leader</button>
       </div>
+
+
       <!-- <div class="block-4 col-3 text-black">
+        <span class="close">&times;</span>
         <h3 class="btn-danger">LEADERBOARD</h3>
         <table class="table-bordered table-striped">
           <thead class="thead-dark">

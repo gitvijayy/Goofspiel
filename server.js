@@ -57,7 +57,8 @@ app.use("/games", gamesRoutes(knex));
 
 app.get('/leaders', (req, res) =>{
   knex
-  .raw('SELECT *, CAST(games_won AS float)/ games_played AS winrate FROM users WHERE games_played != 0 ORDER BY winrate DESC')
+  // .raw('SELECT *, CAST(games_won AS float)/ games_played AS winrate FROM users WHERE games_played != 0 ORDER BY winrate DESC')
+  .raw('SELECT * FROM users WHERE games_played != 0 ORDER BY games_won DESC')
   .then((results) => {
     res.json(results.rows);
   });

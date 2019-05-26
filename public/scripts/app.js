@@ -398,7 +398,7 @@ $(document).ready(function () {
     }
   });
   loginCheck();
-  //getLeaderboard();
+  getLeaderboard();
   //getArchives(document.cookie.split(';')[0].split("=")[1])
   getActiveGames(document.cookie.split(';')[0].split("=")[1])
   //( "#foo" ).trigger( "click" )
@@ -406,4 +406,9 @@ $(document).ready(function () {
   //$(`main .block-1 #${document.cookie.split(';')[1].split("=")[1]}`).trigger(`click`)
   // console.log(document.cookie.split(';')[1].split("=")[1])
   //getGameData(document.cookie.split(';')[1].split("=")[1],0)
+
+
+
+
+
 })
