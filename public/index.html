@@ -9,8 +9,7 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <!-- Including the following four CDN for bootstrap css and javascript -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-   integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+
    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -24,12 +23,6 @@
   <script type="text/javascript" src="/scripts/app.js"></script>
 
 
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-  integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script> -->
-  <!-- <script type="text/javascript" src="/scripts/new-game.js"></script>
-  <script type="text/javascript" src="/scripts/game-play.js"></script> -->
   <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
 </head>
 
@@ -128,18 +121,16 @@
   </div>
 
 
-    <!-- ///////////////////////////Modal section/////////////////// -->
-  <div class="user-logged-out vh-100" style="display: flex;justify-content:center;align-items: center">
-    <main class="bg-light"
-      style="border-radius:10px;width:700px;height:550px;flex-direction:column;display: flex;justify-content:center;align-items: center">
-      <h1 class="text-danger" style="font-family: 'Stylish', sans-serif;font-size: -webkit-xxx-large">GOOFSPIEL</h1>
-      <input class="form-control-sm bg-dark text-white username" type="text" placeholder="username"
-        style="font-family: 'Stylish', sans-serif;height: 47px;width: 320px;font-size: 2rem;">
-      <p class="text-dark" style="font-weight: bold"></p>
-      <button style="width:320px" class="btn btn-danger btn-lg user-submit">Login</button>
-      <h1 class="text-danger" style="font-family: 'Stylish', sans-serif;font-size: -webkit-xxx-large">Game Of Pure
-        Strategy !!</h1>
-      <img src="images/lhl" style="width: 40em;height:8em">
+    <!-- ///////////////////////////End Modal section/////////////////// -->
+    
+  <div class="user-logged-out vh-100">
+    <main class="bg-light">
+      <h1 class="text-danger">GOOFSPIEL</h1>
+      <input class="form-control-sm bg-dark text-white username" type="text" placeholder="username">
+      <p></p>
+      <button class="btn btn-danger btn-lg user-submit">Login</button>
+      <h1 class="text-danger">Game Of Pure Strategy !!</h1>
+      <img src="images/lhl" class ="lighthouse">
     </main>
   </div>
 
@@ -226,9 +217,9 @@
           <article style ="display:flex; justify-content:space-around">
           <!-- <img class="prize-img" src="images/blackBack"> -->
           <p class="btn btn-danger btn-lg prize">
-            Prize<img class="prize-img" src="images/blackBack">
+            <!-- Prize<img class="prize-img" src="images/blackBack"> -->
           </p>
-          <!-- <img class="prize-img" src="images/blackBack"> -->
+          <img class="prize-img" src="images/blackBack">
         </article >
 
           <img class="bet-2-img" src="images/blackBack">
