@@ -14,11 +14,20 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
-
+var socket = require ('socket.io')
 //app.use(express.static(`public`));
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const gamesRoutes = require("./routes/games");
+
+// socket setup
+
+
+//const app = require('express')();
+//const server = require('http').createServer(app);
+//const io = require('socket.io')(server);
+//io.on('connection', () => { /* … */ });
+//server.listen(3000);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -64,6 +73,12 @@ app.get('/archives/:username', (req, res) =>{
   });
 })
 
-app.listen(PORT, () => {
+var server = app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
+var io = socket(server)
+
+io.on('connection',function(socket){
+  console.log("socket connected")
+})
