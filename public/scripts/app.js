@@ -3,6 +3,8 @@ $(document).ready(function () {
   //////////////////////////////////////////////////////////
   let handsPlayed = 0;
   let prizeCards = [];
+  let player1P = 0;
+  let player2P = 0;
 
   var socket = io.connect("http://localhost:8080")
 
@@ -21,6 +23,10 @@ $(document).ready(function () {
 
     if (document.cookie.split(';')[1].split("=")[1] === data.gameID) {
       getGameData(data.gameID, data.prizeCard)
+
+
+
+
     }
   })
 
@@ -168,7 +174,7 @@ $(document).ready(function () {
       else if (!element["bet2"]) {
 
 
-        if (document.cookie.split(';')[0].split("=")[1] === $(`.player-1`).text()) {
+        if (document.cookie.split(';')[0].split("=")[1] === $(`.bet-1`).text()) {
           $(`.bet-1-img`).attr("src", `images/${element["bet1"]}C.png`);
         } else {
           $(`.bet-1-img`).attr("src", `images/blackBack`);
@@ -183,6 +189,8 @@ $(document).ready(function () {
         //console.log($(`.bet-1-img`).attr("id"))
         $(`.player-2`).data("turn", 1);
         $(`.player-1`).data("turn", 0);
+
+
 
         // $(`.player-2`).attr("turnA", 1);
       }
@@ -199,6 +207,12 @@ $(document).ready(function () {
         $(`.prize`).append(`Prize <img class="prize-img" src="images/${element["prize"]}D.png">`)
         $(`.prize`).data("cardIndex", `${element["prize"]}`)
       }
+
+
+
+
+
+
     }
     // let checker = 0;
     for (var i = 1; i < 14; i++) {
@@ -222,6 +236,30 @@ $(document).ready(function () {
     prizeCards = turnsData["prize"]
     //console.log(1, prizeCards)
     handsPlayed = turns.length;
+//  player1P = player1Points;
+// player2P = player2Points;
+// if (handsPlayed === 13 && element["bet2"].length === 13 ) {
+//   $(`main .block-2`).removeClass('bg-alternate-2')
+//   $(`main .block-2`).removeClass('bg-alternate-1')
+//   $(`main .block-2`).addClass('game-over')
+//   if (player1P > player2P) {
+//     $(`.prize`).text(`${$(`.bet-1`).text()} WON`)
+//   } else if (player1P < player2P) {
+//     $(`.prize`).text(`${$(`.bet-2`).text()} WON`)
+//   } else {
+//     $(`.prize`).text("Its A DRAWWWW")
+//   }
+// //$(`.player-1`).empty();
+// // $(`.player-2`).empty();
+// $(`.player-1-turn`).empty();
+// $(`.player-2-turn`).empty();
+// $(`.player-1-turn`).empty()
+// $(`.player-2-turn`).empty()
+// // $(`.player-1-prize`).empty();
+// //$(`.player-2-prize`).empty();
+// }
+
+
 console.log(turns)
     $(`header .block-2`).prepend(`<p class="btn btn-dark btn-lg" ">Total Points - ${player1Points}</p>`)
     $(`footer .block-2`).prepend(`<p class="btn btn-dark btn-lg" >Total Points - ${player2Points}</p>`)
@@ -313,8 +351,10 @@ console.log(turns)
   ///////////////////////////////////////////////////////////////////
   $(document).on(`click`, `main .block-1 p`, function () {
     gamePlayData($(this).attr("id"))
+    $(`main .block-2`).removeClass('game-over')
     $(`main .block-2`).removeClass('bg-alternate-1')
     $(`main .block-2`).addClass('bg-alternate-2')
+
   })
 
 
@@ -380,11 +420,13 @@ console.log(turns)
         success: () => {
 
 
+
+          if (handsPlayed < 13 ) {
           setTimeout(function () {
 
             generatePrizeCard()
           }, 3000);
-
+        }
 
         },
         error: () => {
@@ -407,6 +449,8 @@ console.log(turns)
 
   loginCheck();
   getActiveGames(document.cookie.split(';')[0].split("=")[1])
+  $(`main .block-2`).removeClass('game-over')
   $(`main .block-2`).removeClass('bg-alternate-2')
   $(`main .block-2`).addClass('bg-alternate-1')
+
 })
