@@ -23,7 +23,7 @@ module.exports = (knex) => {
             .then(res.status(200).send());
         } else {
           knex('games')
-            .insert({ player1: req.body.username, status: 'inactive' })
+            .insert({ player1: req.body.username, prizeString: req.body.prizeCards, status: 'inactive' })
             .then(res.status(200).send());
         }
       })
