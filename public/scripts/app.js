@@ -400,6 +400,7 @@ console.log(turns)
     //event.preventDefault();
 
     document.cookie = "username= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+    document.cookie = "gameid= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
     loginCheck();
     //location.reload();
   })
