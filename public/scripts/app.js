@@ -10,17 +10,19 @@ $(document).ready(function () {
       gameID: document.cookie.split(';')[1].split("=")[1],
       player1: $(`.player-1`).text(),
       player2: $(`.player-2`).text(),
-      generatePrizeCard: generatePrizeCard
+      generatePrizeCard: generatePrizeCard,
+      //cb:cb
     })
+
   }
   socket.on('gameplay', (data) => {
     //console.log($(`.player-2`).text(), $(`.player-1`).text(), data.player2, data.player1, document.cookie.split(';')[1].split("=")[1], data.gameID)
-    if ($(`.player-2`).text() === data.player2
-      && $(`.player-1`).text() === data.player1 &&
-      document.cookie.split(';')[1].split("=")[1] === data.gameID) {
+    // if ($(`.player-2`).text() === data.player2
+    //   && $(`.player-1`).text() === data.player1 &&
+    //   document.cookie.split(';')[1].split("=")[1] === data.gameID) {
       //console.log("1,in")
       getGameData(data.gameID, data.generatePrizeCard)
-    }
+    // }
   })
   const loginCheck = () => {
     if (!document.cookie) {
@@ -71,10 +73,12 @@ $(document).ready(function () {
   //////////////!
   const generatePrizeCard = () => {
     let checker = 0;
+    console.log("1",prizeCards)
     while (checker === 0) {
       let prizeCard = Math.floor(Math.random() * 14);
       if (prizeCard === 0) { prizeCard += 1 }
       if (!prizeCards.includes(prizeCard)) {
+        console.log("2",prizeCards)
         $.ajax({
           type: "PUT",
           url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
@@ -87,8 +91,10 @@ $(document).ready(function () {
         checker = 1;
       }
     }
+    getGameData(document.cookie.split(';')[1].split("=")[1])
   }
-  const splitTurnsData = (turns) => {
+  const splitTurnsData = (turns,pc) => {
+    console.log(11111,pc)
     turns.sort((a, b) => {
       return a.id - b.id;
     })
@@ -151,6 +157,7 @@ $(document).ready(function () {
         //console.log(33)
         //console.log(index, "else")
         turnsData["prize"].push(element.prize)
+
         $(`.player-1`).data("turn", 1);
         $(`.player-2`).data("turn", 0);
         $(`.player-1`).attr("turnA", 1);
@@ -190,6 +197,7 @@ $(document).ready(function () {
     }
     prizeCards = turnsData["prize"]
     handsPlayed = turns.length;
+console.log(turns)
     $(`header .block-2`).prepend(`<p class="btn btn-dark btn-lg" ">Total Points - ${player1Points}</p>`)
     $(`footer .block-2`).prepend(`<p class="btn btn-dark btn-lg" >Total Points - ${player2Points}</p>`)
     return turnsData;
@@ -217,7 +225,7 @@ $(document).ready(function () {
       method: "GET",
       url: `users/${user}`
     }).done((users) => {
-      // console.log(users)
+       console.log(users)
       $(`main .block-1 p`).remove()
       users.forEach(element => {
         if (element.player1 === user || element.player2 === user) {
@@ -324,7 +332,7 @@ $(document).ready(function () {
     $.ajax({
       type: "PUT",
       url: "/games",
-      data: { username: user },
+      data: { username: user, prizeCards:"5,7,8,9,10,11,12,13,1,2,3,4,6"},
       success: () => {
         getActiveGames(user)
       },
@@ -450,6 +458,7 @@ $(document).ready(function () {
     }
   });
   $(document).on(`click`, `.player-2 img`, function () {
+
     if (document.cookie.split(';')[0].split("=")[1] != ($(`.bet-2`).text())) {
       alert("Stick to your cards");
       return false;
@@ -457,11 +466,12 @@ $(document).ready(function () {
     let turnCheck = $(`.player-2`).data("turn");
     //let handsPlayed = $(`.prize-card`).data("gameStatus");
     if (turnCheck === 1) {
+
       // $(`.player-2`).data("turn", 0);
       // $(`.player-1`).data("turn", 1);
       //console.log(handsPlayed);
       let status = "active"
-      if (handsPlayed === 12) { status = "done" }
+      if (handsPlayed === 12) { status = "done"; handsPlayed=0 }
       console.log(handsPlayed)
       console.log(status)
       $.ajax({
@@ -474,7 +484,9 @@ $(document).ready(function () {
         },
         success: () => {
           socketForGameplay(true)
+        //if (status != "done"){
           generatePrizeCard()
+         //}
         },
         error: () => {
         },
