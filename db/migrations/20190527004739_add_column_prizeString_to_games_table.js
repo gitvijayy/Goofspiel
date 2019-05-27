@@ -2,7 +2,7 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.table('games', function (table){
-      table.string('winner')
+      table.string('prizeString')
     })
   ])
 };
@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
 exports.down = function(knex, Promise) {
   return Promise.all([
     knex.schema.table('games', function (table){
-      table.dropColumn('winner');
+      table.dropColumn('prizeString');
     })
   ])
 };
