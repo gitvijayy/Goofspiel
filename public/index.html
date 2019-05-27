@@ -10,101 +10,72 @@
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <!-- Including the following four CDN for bootstrap css and javascript -->
 
-   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-   integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
-
+  <script type="text/javascript" src="/scripts/html.js"></script>
 
   <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<!-- //////////////////////////////////////////MODAL section/////////////////////// -->
-<!-- //modal_leader -->
-  <div class="modal fade modal-boards" tabindex="-1" role="dialog" aria-hidden="true" >
+
+  <div class="modal fade modal-boards" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-
-        <!-- <div class="modal-header">
-
-
-        </div> -->
-
         <div class="modal-body">
-            <h3 class="btn-danger leaderboard-title"><button style = "margin-right: 10px;
+          <h3 class="btn-danger leaderboard-title"><button style="margin-right: 10px;
               font-size: xx-large;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button><p></p>   </h3>
-              <ul class = "rules-gops">
-                  <br>  <li>Each player receives a suit of 13 cards to play against each other</li>
-                  <br><li>A third suit of cards is designated as the prize cards players have to bid for</li>
-                  <br> <li>Each card is worth their face value. A's are worth 1 point, J's are worth 11 points, Q's are worth 12 points, K's are worth 13 points</li>
-                  <br><li>On each turn, a prize card is revealed from the prize suit</li>
-                  <br><li>Each player then play a card to bid for the prize card. The player with the higher bidding card collects the prize card</li>
-                  <br><li>The game ends when there are no more prize cards available for bidding</li>
-                  <br><li>When the game ends, the player with the highest number of prize cards points wins</li>
-                </ul>
-            <table class="table-bordered pre-scrollable table-striped">
-              <thead class="thead-dark">
-                <tr class = "leaderboard-head archives-head">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <p></p>
+          </h3>
+          <ul class="rules-gops">
+            <br>
+            <li>Each player receives a suit of 13 cards to play against each other</li>
+            <br>
+            <li>A third suit of cards is designated as the prize cards players have to bid for</li>
+            <br>
+            <li>Each card is worth their face value. A's are worth 1 point, J's are worth 11 points, Q's are worth 12
+              points, K's are worth 13 points</li>
+            <br>
+            <li>On each turn, a prize card is revealed from the prize suit</li>
+            <br>
+            <li>Each player then play a card to bid for the prize card. The player with the higher bidding card collects
+              the prize card</li>
+            <br>
+            <li>The game ends when there are no more prize cards available for bidding</li>
+            <br>
+            <li>When the game ends, the player with the highest number of prize cards points wins</li>
+          </ul>
+          <table class="table-bordered pre-scrollable table-striped">
+            <thead class="thead-dark">
+              <tr class="leaderboard-head archives-head">
 
-                </tr>
-              </thead>
-              <tbody class="leaderboard-body archives-body">
+              </tr>
+            </thead>
+            <tbody class="leaderboard-body archives-body">
 
-                </tbody>
-            </table>
+            </tbody>
+          </table>
         </div>
-
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div> -->
 
       </div>
     </div>
   </div>
 
-
-
-   <!-- <div class="modal fade modal_rules" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Rules</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <ul>
-            <li>Each player receives a suit of 13 cards to play against each other</li>
-            <li>A third suit of cards is designated as the prize cards players have to bid for</li>
-            <li>Each card is worth their face value. A's are worth 1 point, J's are worth 11 points, Q's are worth 12 points, K's are worth 13 points</li>
-            <li>On each turn, a prize card is revealed from the prize suit</li>
-            <li>Each player then play a card to bid for the prize card. The player with the higher bidding card collects the prize card</li>
-            <li>The game ends when there are no more prize cards available for bidding</li>
-            <li>When the game ends, the player with the highest number of prize cards points wins</li>
-          </ul>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-
-    <!-- ///////////////////////////End Modal section/////////////////// -->
 
   <div class="user-logged-out vh-100">
     <main class="bg-light">
@@ -113,11 +84,9 @@
       <p></p>
       <button class="btn btn-danger btn-lg user-submit">Login</button>
       <h1 class="text-danger">Game Of Pure Strategy !!</h1>
-      <img src="images/lhl" class ="lighthouse">
+      <img src="images/lhl" class="lighthouse">
     </main>
   </div>
-
-
 
 
   <div class="user-logged-in">
@@ -126,12 +95,7 @@
         <h1 class="player-1-turn text-danger"></h1>
       </div>
       <div class="block-2 col-8 bg-success bg-prize-cards player-1-prize">
-        <!--  -->
-        <!-- <p class="btn btn-dark btn-lg" ></p> -->
-        <!--  -->
-        <!-- <article class="player-1-prize">
 
-        </article> -->
       </div>
       <div class="block-3 col-2 bg-rolling-gif">
       </div>
@@ -139,54 +103,13 @@
 
     <main class="row">
 
-        <!-- var modal = document.getElementById("myModal");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0]; -->
-
-
-
-        <!-- <button id="myBtn">Open Modal</button> -->
-
-        <!-- The Modal -->
-        <!-- <div id="modal-div" class="modal"> -->
-
-          <!-- Modal content -->
-          <!-- <div class="modal-content">
-            <span class="modal-close">&times;</span>
-            <p>Some text in the Modal..</p>
-          </div>
-
-        </div> -->
-
 
       <div class="block-1 col-1 borders pre-scrollable text-white bg-rolling-gif">
-        <h2 class="btn btn-danger btn-lg btn-block ">Active Games</h2>
-        <!-- <p class="btn btn-danger btn-lg btn-block">Active Games</p> -->
+        <h2 class="btn btn-light btn-lg btn-block ">Active Games</h2>
+
       </div>
-      <div class="block-2 col-10">
+      <div class="block-2 col-10 bg-alternate">
 
-        <!-- <img style = "position: relative;top: 500px;" src = "images/aces.png">
-    <img style = "position: relative;top: 380px;left: 500px;" src = "images/aces.png"> -->
-    <!-- <div class="block-4 col-3 text-black" >
-        <h3 class="btn-danger">LEADERBOARD</h3>
-        <table class="table-bordered table-striped">
-          <thead class="thead-dark">
-            <tr>
-              <th>#</th>
-              <th>User</th>
-              <th>Played</th>
-              <th>Won</th>
-              <th>Lost</th>
-            </tr>
-          </thead>
-          <tbody class="leaderboard archives">
-
-        </table>
-      </div> -->
 
 
         <article class="player-1 hide-display">
@@ -194,51 +117,36 @@
 
         </article>
         <article class="prize-card hide-display">
-          <p class="btn btn-dark btn-lg bet-1">Player 1</p>
+          <p class="btn btn-dark btn-lg bet-1" >Player 1</p>
 
-
-
-                <img class="bet-1-img" src="images/blackBack">
-
-
-
-
-
-
-
-
-
-
-          <!-- <article style ="display:flex; justify-content:space-around"> -->
-          <!-- <img class="prize-img" src="images/blackBack"> -->
-
-
+          <img class="bet-1-img" src="images/blackBack">
 
 
           <p class="btn btn-danger btn-lg prize">
             Prize
             <img class="prize-img" src="images/blackBack">
           </p>
-          <!-- <img class="prize-img" src="images/blackBack"> -->
-        <!-- </article > -->
 
 
+          <img class="bet-2-img" src="images/blackBack">
 
-              <img class="bet-2-img" src="images/blackBack">
-
-          <!-- <img class="bet-2-img" src="images/blackBack"> -->
-          <p class="btn btn-dark btn-lg bet-2">Player 2</p>
+          <p class="btn btn-dark btn-lg bet-2" >Player 2</p>
         </article>
         <article class="player-2 hide-display">
 
         </article>
       </div>
       <div class="block-3 col-1 bg-rolling-gif">
-        <button class="btn btn-success btn-lg btn-block new-game">New Game</button>
-        <button class="btn btn-warning btn-lg btn-block refresh">Refresh</button>
-        <button class="btn btn-info btn-lg btn-block archive" data-toggle="modal" data-target=".modal-boards">Archive</button>
-        <button  class="btn btn-danger btn-lg btn-block leader" data-toggle="modal" data-target=".modal-boards">Leader</button>
-        <button  class="btn btn-warning btn-lg btn-block rules" data-toggle="modal" data-target=".modal-boards">Rules</button>
+        <button class="btn btn-dark btn-lg btn-block new-game">New Game</button>
+
+        <button class="btn btn-dark btn-lg btn-block archive" data-toggle="modal"
+          data-target=".modal-boards">Archive</button>
+        <button class="btn btn-dark btn-lg btn-block leader" data-toggle="modal"
+          data-target=".modal-boards">Leader</button>
+        <button class="btn btn-dark btn-lg btn-block rules" data-toggle="modal"
+          data-target=".modal-boards">Rules</button>
+
+          <button class="btn btn-danger btn-lg btn-block logout">LogOut</button>
       </div>
 
     </main>
@@ -249,12 +157,6 @@
       </div>
       <div class="block-2 bg-white col-8 bg-prize-cards player-2-prize">
 
-         <!--  -->
-        <!-- <p class="btn btn-dark btn-lg" ></p> -->
-        <!--  -->
-        <!-- <article class="player-2-prize">
-
-        </article> -->
       </div>
       <div class="block-3 col-2 bg-rolling-gif">
       </div>
@@ -264,13 +166,6 @@
 
 
 
-  <button class="btn btn-success btn-lg btn-block flip-itt">New Game</button>
-
 </body>
 
 </html>
-
-
-
-
-

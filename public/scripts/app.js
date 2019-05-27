@@ -3,49 +3,43 @@ $(document).ready(function () {
   //////////////////////////////////////////////////////////
   let handsPlayed = 0;
   let prizeCards = [];
-  let pc1 = 0;
+
   var socket = io.connect("http://localhost:8080")
+
   const socketForGameplay = (generatePrizeCard, pc) => {
     socket.emit('gameplay', {
       gameID: document.cookie.split(';')[1].split("=")[1],
       player1: $(`.bet-1`).text(),
       player2: $(`.bet-2`).text(),
       generatePrizeCard: generatePrizeCard,
-      prizeCard: pc1
+
     })
   }
+
   socket.on('gameplay', (data) => {
 
-      if(document.cookie.split(';')[1].split("=")[1] === data.gameID) {
+    if (document.cookie.split(';')[1].split("=")[1] === data.gameID) {
       getGameData(data.gameID, data.prizeCard)
     }
   })
+
   socket.on('turns', (data) => {
     console.log(data)
 
-      if(document.cookie.split(';')[1].split("=")[1] === data.gameID) {
-    $(`.bet-1-img`).attr("src", `images/${data.bet1}C.png`);
-    $(`.bet-2-img`).attr("src", `images/${data.bet2}H.png`);
+    if (document.cookie.split(';')[1].split("=")[1] === data.gameID) {
+      $(`.bet-1-img`).attr("src", `images/${data.bet1}C.png`);
+      $(`.bet-2-img`).attr("src", `images/${data.bet2}H.png`);
 
-    $(`.prize`).text(data.player1)
-
-if(data.bet1>data.bet2){
-  $(`.prize`).text($(`.bet-1`).text())
-} else if (data.bet1>data.bet2) {
-  $(`.prize`).text($(`.bet-2`).text())
-} else {
-  $(`.prize`).text("DRAW")
-}
-
-
-
-
-
+      if (data.bet1 > data.bet2) {
+        $(`.prize`).text(`${$(`.bet-1`).text()} Won the Bet`)
+      } else if (data.bet1 < data.bet2) {
+        $(`.prize`).text(`${$(`.bet-1`).text()} Won the Bet`)
+      } else {
+        $(`.prize`).text("Its A DRAWWWW")
       }
 
-    // $(`.flip-card-inner`).addClass("flip-it")
-    // $( `.flip-card-inner`).addClass(`flip-it`)
-    // }
+    }
+
   })
   const loginCheck = () => {
     if (!document.cookie) {
@@ -93,6 +87,25 @@ if(data.bet1>data.bet2){
     ////////////////////////////////////////////////
     $(`.player-1`).data("turn", 1);
   }
+
+  const gamePlayData = (gameId) => {
+    console.log(gameId)
+    let player1 = $(`#${gameId}`).data("player1");
+    let player2 = $(`#${gameId}`).data("player2");
+    console.log(player1,player2)
+    if (!player1 || !player2) {
+      //////////////!
+      alert("Waiting for a player to join the game")
+      return false;
+    }
+    //let gameId = $(this).attr("id")
+    document.cookie = `gameid=${gameId}`
+    flipGameBoard();
+    $(`.bet-1`).text(player1)
+    $(`.bet-2`).text(player2)
+    getGameData(gameId, 0)
+  }
+
   const generatePrizeCard = () => {
     let checker = 0;
     while (checker === 0) {
@@ -114,9 +127,9 @@ if(data.bet1>data.bet2){
     }
   }
   const splitTurnsData = (turns, prizeCard) => {
-    turns.sort((a, b) => {
-      return a.id - b.id;
-    })
+
+    turns.sort((a, b) => { return a.id - b.id; })
+
     let turnsData = { player1: [], player2: [], player1prize: [], player2prize: [], prize: [] };
     let player1Points = 0;
     let player2Points = 0;
@@ -140,12 +153,11 @@ if(data.bet1>data.bet2){
       $(`.prize`).empty()
 
       if (!element["bet1"]) {
-        $(`.bet-1-img`).attr("src", "images/blackBack")
+        $(`.bet-2-img`).attr("src", `images/aces.png`);
         $(`.bet-2-img`).attr("src", "images/blackBack")
         $(`.player-1`).data("turn", 1);
         $(`.player-2`).data("turn", 0);
-        $(`header .block-1 h1`).text("PLACE A BET")
-        $(`footer .block-1 h1`).text("WAIT")
+
         $(`.player-2`).attr("turnA", 1);
         $(`.prize`).append(`Prize <img class="prize-img" src="images/${element["prize"]}D.png">`)
         $(`.prize`).data("cardIndex", `${element["prize"]}`)
@@ -158,7 +170,7 @@ if(data.bet1>data.bet2){
         } else {
           $(`.bet-1-img`).attr("src", `images/blackBack`);
         }
-        $(`.bet-2-img`).attr("src", `images/betnow.jpg`);
+        $(`.bet-2-img`).attr("src", `images/aces.png`);
         $(`.prize`).append(`Prize <img class="prize-img" src="images/${element["prize"]}D.png">`)
         $(`.prize`).data("cardIndex", `${element["prize"]}`)
 
@@ -168,20 +180,18 @@ if(data.bet1>data.bet2){
         //console.log($(`.bet-1-img`).attr("id"))
         $(`.player-2`).data("turn", 1);
         $(`.player-1`).data("turn", 0);
-        $(`header .block-1 h1`).text("WAIT")
-        $(`footer .block-1 h1`).text("PLACE A BET")
-        $(`.player-2`).attr("turnA", 1);
+
+        // $(`.player-2`).attr("turnA", 1);
       }
       else {
         turnsData["prize"].push(element.prize)
         $(`.player-1`).data("turn", 1);
         $(`.player-2`).data("turn", 0);
-        $(`.player-1`).attr("turnA", 1);
-        $(`.bet-1-img`).attr("src", "images/betnow.png")
+        //$(`.player-1`).attr("turnA", 1);
+        $(`.bet-1-img`).attr("src", `images/aces.png`);
 
         $(`.bet-2-img`).attr("src", "images/blackBack")
-        $(`header .block-1 h1`).text("PLACE A BET")
-        $(`footer .block-1 h1`).text("WAIT")
+
         $(`.prize`).append(`Prize <img class="prize-img" src="images/${element["prize"]}D.png">`)
         $(`.prize`).data("cardIndex", `${element["prize"]}`)
       }
@@ -241,7 +251,7 @@ if(data.bet1>data.bet2){
           if (element.status === "inactive") {
             $(`main .block-1`).append(`<p id = ${element.id} class="btn btn-light btn-lg btn-block">${element.id}</p>`)
           } else if (element.status === "active") {
-            $(`main .block-1`).append(`<p id = ${element.id} class="btn btn-success btn-lg btn-block">${element.id}</p>`)
+            $(`main .block-1`).append(`<p id = ${element.id} class="btn btn-dark btn-lg btn-block">${element.id}</p>`)
           }
           $(`main .block-1 #${element.id}`).data("player1", element.player1)
           $(`main .block-1 #${element.id}`).data("player2", element.player2)
@@ -250,65 +260,7 @@ if(data.bet1>data.bet2){
       loginCheck()
     })
   }
-  const getLeaderboard = () => {
-    $.ajax({
-      method: "GET",
-      url: `/leaders`
-    }).done((leaders) => {
-      $(`.rules-gops`).css("display", "none")
-      $(`.leaderboard-title p`).text("LEADERBOARD")
-      $(`.leaderboard-head th`).remove();
-      $(`.leaderboard-body tr`).remove();
-      $(`.leaderboard-head`)
-        .append($(`<th>Rank</th>
-        <th>User</th>
-        <th>Played</th>
-        <th>Won</th>
-        <th>Lost</th>`))
-      leaders.forEach((element) => {
-        $(`.leaderboard-body`)
-          .append($(`<tr>
-          <td>${$(`.leaderboard-body tr`).length + 1}</td>
-        <td>${element.username}</td>
-        <td>${element.games_played}</td>
-        <td>${element.games_won}</td>
-        <td>${element.games_played - element.games_won}</td>
-        </tr>`))
-      })
-    })
-  }
-  ///////////////////////////////////////////////////////
-  const getArchives = (username) => {
-    $.ajax({
-      method: "GET",
-      url: `/archives/${username}`,
-    }).done((archives) => {
-      $(`.rules-gops`).css("display", "none")
-      $(`.leaderboard-title p`).text("Games Archive")
-      $(`.leaderboard-head th`).remove();
-      $(`.leaderboard-body tr`).remove();
-      $(`.leaderboard-head`)
-        .append($(`
-        <th>#</th>
-        <th>Game Id</th>
-        <th>Player 1</th>
-        <th>Player 2</th>
-        <th>Winner</th>
-        `))
-      archives.forEach((element) => {
-        if (element.status === "done") {
-          $(`.leaderboard-body`)
-            .append($(`<tr>
-          <td>${$(`.leaderboard-body tr`).length + 1}</td>
-        <td>${element.id}</td>
-        <td>${element.player1}</td>
-        <td>${element.player2}</td>
-        <td>${element.winner}</td>
-        </tr>`))
-        }
-      })
-    })
-  }
+
   //////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////
   const addNewUser = (user) => {
@@ -340,18 +292,7 @@ if(data.bet1>data.bet2){
     });
   }
   /////////////////////////////////////////////////////////
-  $(document).on(`click`, `.leader`, function () {
-    getLeaderboard();
-  })
-  $(document).on(`click`, `.archive`, function () {
-    getArchives(document.cookie.split(';')[0].split("=")[1]);
-  })
-  $(document).on(`click`, `.rules`, function () {
-    $(`.leaderboard-title p`).text("GAMEPLAY RULES")
-    $(`.leaderboard-head th`).remove();
-    $(`.leaderboard-body tr`).remove();
-    $(`.rules-gops`).css("display", "block")
-  })
+
   /////////////////////////////////////////////////////////
   $(document).on(`click`, `.user-submit`, function () {
     if ($(`.username`).val().trim()) {
@@ -366,20 +307,13 @@ if(data.bet1>data.bet2){
   })
   ///////////////////////////////////////////////////////////////////
   $(document).on(`click`, `main .block-1 p`, function () {
-    let player1 = $(this).data("player1");
-    let player2 = $(this).data("player2");
-    if (!player1 || !player2) {
-      //////////////!
-      alert("Waiting for a player to join the game")
-      return false;
-    }
-    let gameId = $(this).attr("id")
-    document.cookie = `gameid=${gameId}`
-    flipGameBoard();
-    $(`.bet-1`).text(player1)
-    $(`.bet-2`).text(player2)
-    getGameData(gameId, 0)
+    gamePlayData($(this).attr("id"))
+    $(`main .block-2`).removeClass('bg-alternate-1')
+$(`main .block-2`).addClass('bg-alternate-2')
   })
+
+
+
   /////////////////////////////////////////////////////////
   $(document).on(`click`, `.player-1 img`, function () {
     if (document.cookie.split(';')[0].split("=")[1] != ($(`.bet-1`).text())) {
@@ -454,7 +388,18 @@ if(data.bet1>data.bet2){
       alert("Not your turn")
     }
   });
-  loginCheck();
-  getActiveGames(document.cookie.split(';')[0].split("=")[1])
 
+  $(document).on(`click`, `.logout`, function (event) {
+
+    //event.preventDefault();
+
+    document.cookie = "username= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+
+    //location.reload();
+  })
+
+loginCheck();
+getActiveGames(document.cookie.split(';')[0].split("=")[1])
+$(`main .block-2`).removeClass('bg-alternate-2')
+$(`main .block-2`).addClass('bg-alternate-1')
 })
