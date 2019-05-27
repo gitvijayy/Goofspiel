@@ -86,7 +86,9 @@ io.on('connection',function(socket){
   socket.on('gameplay',(data)=>{
 io.sockets.emit('gameplay',data)
   })
-
+  socket.on('turns',(data)=>{
+    io.sockets.emit('turns',data)
+      })
 
 
 })
