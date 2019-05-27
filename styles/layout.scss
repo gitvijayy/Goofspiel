@@ -5,7 +5,41 @@ body {
 .user-logged-out {
   background-image: url("https://i.pinimg.com/originals/7a/11/fe/7a11fe95e6c8aa2b3db37b17ca941e9c.gif");
   background-size: contain;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  .bg-light{
+    border-radius:10px;
+    width:700px;
+    height:550px;
+    flex-direction:column;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    .username{
+      font-family: 'Stylish', sans-serif;
+      height: 47px;
+      width: 320px;
+      font-size: 2rem;
+    }
+    .user-submit{
+      width:320px;
+    }
+    .lighthouse{
+      width: 40em;
+      height:8em;
+    }
+  }
 }
+
+
+.text-danger{
+  font-family: 'Stylish', sans-serif;
+  font-size: -webkit-xxx-large;
+}
+
+
+
 
 // .no-active-games {
 //   background-image: "../public/images/aces.png";
