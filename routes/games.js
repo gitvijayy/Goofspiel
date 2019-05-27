@@ -51,18 +51,13 @@ module.exports = (knex) => {
   // - update games table winner column and username table games_played games_won column
   router.put('/:gameid', (req, res) => {
     ///////////////////// new refactor code//////////////////
-  //on game begins, client sends prize card, game id info
-  // if (req.body.type !== 'bet1' && req.body.type !== 'bet2'){
-  //   console.log('if loop for not bet1 bet2 type triggered')
-  //   knex('turns')
-  //   .insert({ games_id: req.params.gameid, prize: req.body.prize})
-  //   .then(res.status(200).send());
-  // //after game starts, all put request from player submitting a card will be attached with type of bet1 or bet2    
-  // } else if (req.body.type === 'bet1') {
+
+  //after game starts, all put request from player submitting a card will be attached with type of bet1 or bet2    
+  // if (req.body.type === 'bet1') {
   //   console.log('if loop for bet1 type triggered')
   //   knex('turns')
   //     .where('games_id', req.params.gameid)
-  //     .update({'bet1': req.body.bet})
+  //     .update({ 'bet1': req.body.bet, prize: req.body.prize, games_id: req.params.gameid })
   //     .then(res.status(200).send());
   // } else if (req.body.type === 'bet2'){
   //   console.log('if loop for bet2 type triggered')
@@ -92,7 +87,12 @@ module.exports = (knex) => {
   //           }
   //         });
   //     })
-  // } 
+  // } else if (req.body.type !== 'bet1' && req.body.type !== 'bet2'){//on game begins, client sends prize card, game id info
+  //   console.log('else loop for not bet1 bet2 type triggered', req.body.type)
+  //   knex('turns')
+  //   .insert({ games_id: req.params.gameid, prize: req.body.prize, bet1: req.body.bet})
+  //   .then(res.status(200).send());
+  // }  
   /////////////////////////////////
 
 
