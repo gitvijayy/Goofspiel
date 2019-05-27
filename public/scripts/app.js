@@ -33,7 +33,7 @@ $(document).ready(function () {
       if (data.bet1 > data.bet2) {
         $(`.prize`).text(`${$(`.bet-1`).text()} Won the Bet`)
       } else if (data.bet1 < data.bet2) {
-        $(`.prize`).text(`${$(`.bet-1`).text()} Won the Bet`)
+        $(`.prize`).text(`${$(`.bet-2`).text()} Won the Bet`)
       } else {
         $(`.prize`).text("Its A DRAWWWW")
       }
@@ -92,7 +92,7 @@ $(document).ready(function () {
     console.log(gameId)
     let player1 = $(`#${gameId}`).data("player1");
     let player2 = $(`#${gameId}`).data("player2");
-    console.log(player1,player2)
+    console.log(player1, player2)
     if (!player1 || !player2) {
       //////////////!
       alert("Waiting for a player to join the game")
@@ -309,7 +309,7 @@ $(document).ready(function () {
   $(document).on(`click`, `main .block-1 p`, function () {
     gamePlayData($(this).attr("id"))
     $(`main .block-2`).removeClass('bg-alternate-1')
-$(`main .block-2`).addClass('bg-alternate-2')
+    $(`main .block-2`).addClass('bg-alternate-2')
   })
 
 
@@ -394,12 +394,12 @@ $(`main .block-2`).addClass('bg-alternate-2')
     //event.preventDefault();
 
     document.cookie = "username= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
-
+    loginCheck();
     //location.reload();
   })
 
-loginCheck();
-getActiveGames(document.cookie.split(';')[0].split("=")[1])
-$(`main .block-2`).removeClass('bg-alternate-2')
-$(`main .block-2`).addClass('bg-alternate-1')
+  loginCheck();
+  getActiveGames(document.cookie.split(';')[0].split("=")[1])
+  $(`main .block-2`).removeClass('bg-alternate-2')
+  $(`main .block-2`).addClass('bg-alternate-1')
 })
