@@ -16,13 +16,13 @@ $(document).ready(function () {
 
   }
   socket.on('gameplay', (data) => {
-    //console.log($(`.player-2`).text(), $(`.player-1`).text(), data.player2, data.player1, document.cookie.split(';')[1].split("=")[1], data.gameID)
-    // if ($(`.player-2`).text() === data.player2
-    //   && $(`.player-1`).text() === data.player1 &&
-    //   document.cookie.split(';')[1].split("=")[1] === data.gameID) {
-      //console.log("1,in")
+    console.log($(`.player-2`).text(), $(`.player-1`).text(), data.player2, data.player1, document.cookie.split(';')[1].split("=")[1], data.gameID)
+    if ($(`.player-2`).text() === data.player2
+      && $(`.player-1`).text() === data.player1 &&
+      document.cookie.split(';')[1].split("=")[1] === data.gameID) {
+      console.log("1,in")
       getGameData(data.gameID, data.generatePrizeCard)
-    // }
+    }
   })
   const loginCheck = () => {
     if (!document.cookie) {
@@ -55,6 +55,17 @@ $(document).ready(function () {
         $(`.player-1`).append(`<img id ="${i}" src ="images/${i}C.png")>`)
         //$(`.player-2`).append(`<img src ="images/blackBack")>`)
         $(`.player-2`).append(`<img id ="${i}" src ="images/blackBack")>`)
+
+        //let prizeCard = Math.floor(Math.random() * 14);
+        //if (prizeCard === 0) { prizeCard += 1 }
+        //if (!prizeCards.includes(prizeCard) && prizeCard) {
+          //$(`main .block-1 #${document.cookie.split(';')[1].split("=")[1]}`).attr("data-cards",prizeCard)
+         // checker =1;
+        //}
+
+
+    //generatePrizeCard()
+
       }
       if (document.cookie.split(';')[0].split("=")[1] === $(`.bet-2`).text()) {
         $(`.player-2`).append(`<img id ="${i}" src ="images/${i}H.png")>`)
@@ -62,23 +73,37 @@ $(document).ready(function () {
         //$(`.player-1`).append(`<img  src ="images/blackBack")>`)
       }
     }
-    $(`.prize-img`).attr("src", `images/${gameId.split("")[0]}D.png`)
+    let prizeCard= $(`main .block-1 #${document.cookie.split(';')[1].split("=")[1]}`).attr("data-cards").split(",")[0]
+
+
+
+    //!$(`.prize-img`).attr("src", `images/${gameId.split("")[0]}D.png`)
+    $(`.prize-img`).attr("src", `images/${prizeCard}D.png`)
     $(`.bet-1-img`).attr("src", "images/blackBack")
     $(`.bet-2-img`).attr("src", "images/blackBack")
     ///////////////////////////////////////////////////
-    $(`.prize`).data("cardIndex", `${gameId.split("")[0]}`)
+
+    //$(`.prize`).data("cardIndex", `${gameId.split("")[0]}`)
+    $(`.prize`).data("cardIndex", prizeCard)
     ////////////////////////////////////////////////
     $(`.player-1`).data("turn", 1);
   }
   //////////////!
-  const generatePrizeCard = () => {
-    let checker = 0;
-    console.log("1",prizeCards)
-    while (checker === 0) {
-      let prizeCard = Math.floor(Math.random() * 14);
-      if (prizeCard === 0) { prizeCard += 1 }
-      if (!prizeCards.includes(prizeCard)) {
-        console.log("2",prizeCards)
+  const generatePrizeCard = (pc) => {
+    //  let checker = 0;
+    //  console.log("1",prizeCards)
+    //  while (checker === 0) {
+    //    let prizeCard = Math.floor(Math.random() * 14);
+    //    if (prizeCard === 0) { prizeCard += 1 }
+    //    if (!prizeCards.includes(prizeCard) && prizeCard) {
+      let prizeCard= $(`main .block-1 #${document.cookie.split(';')[1].split("=")[1]}`).attr("data-cards").split(",")[handsPlayed]
+      // console.log(prizeCard)
+      // let prizeCard1= $(`main .block-1 #${document.cookie.split(';')[1].split("=")[1]}`).attr("data-cards")
+      // console.log(prizeCard1)
+      //.split(",")[handsPlayed]
+      //console.log(prizeCard)
+      //return;
+        // console.log("2",prizeCards)
         $.ajax({
           type: "PUT",
           url: `/games/${document.cookie.split(';')[1].split("=")[1]}`,
@@ -88,10 +113,10 @@ $(document).ready(function () {
           error: () => {
           },
         });
-        checker = 1;
-      }
-    }
-    getGameData(document.cookie.split(';')[1].split("=")[1])
+         //checker = 1;
+       //}
+     //}
+    //getGameData(document.cookie.split(';')[1].split("=")[1])
   }
   const splitTurnsData = (turns,pc) => {
     console.log(11111,pc)
@@ -122,13 +147,15 @@ $(document).ready(function () {
       }
       //}
       //if (element["winner"] == null && element["bet2"] == null && element["bet1"] != null) {
-      if (!element["winner"] && !element["bet2"] && element["bet1"]) {
+      //if (!element["winner"] && !element["bet2"] && element["bet1"]) {
         //console.log(0)
-        console.log(0, element["prize"])
+       // console.log(0, element["prize"])
         $(`.prize-img`).attr("src", `images/${element["prize"]}D.png`)
         $(`.prize`).data("cardIndex", `${element["prize"]}`)
         winnerCheck = 1;
-      }
+      //}
+
+
       //if (element["bet1"] == null ) {
       if (!element["bet1"]) {
         //console.log(11)
@@ -139,7 +166,7 @@ $(document).ready(function () {
         $(`header .block-1 h1`).text("PLACE A BET")
         $(`footer .block-1 h1`).text("WAIT")
         $(`.prize-img`).attr("src", `images/${element["prize"]}D.png`)
-        $(`.prize`).data("cardIndex", `${element["prize"]}`)
+        //$(`.prize`).data("cardIndex", `${element["prize"]}`)
         $(`.player-2`).attr("turnA", 1);
       }
       //else if (element["bet2"] == null ) {
@@ -151,6 +178,7 @@ $(document).ready(function () {
         $(`.player-1`).data("turn", 0);
         $(`header .block-1 h1`).text("WAIT")
         $(`footer .block-1 h1`).text("PLACE A BET")
+       // $(`.prize`).data("cardIndex", `${element["prize"]}`)
         $(`.player-2`).attr("turnA", 1);
       }
       else {
@@ -158,11 +186,13 @@ $(document).ready(function () {
         //console.log(index, "else")
         turnsData["prize"].push(element.prize)
 
+
         $(`.player-1`).data("turn", 1);
         $(`.player-2`).data("turn", 0);
         $(`.player-1`).attr("turnA", 1);
         $(`.bet-1-img`).attr("src", "images/blackBack")
         $(`.bet-2-img`).attr("src", "images/blackBack")
+        //$(`.prize`).data("cardIndex", `${element["prize"]}`)
         $(`header .block-1 h1`).text("PLACE A BET")
         $(`footer .block-1 h1`).text("WAIT")
       }
@@ -197,6 +227,21 @@ $(document).ready(function () {
     }
     prizeCards = turnsData["prize"]
     handsPlayed = turns.length;
+//////////////////////////////////////////////////////
+    //let checker = 0;
+    //console.log("1",prizeCards)
+    //if(turns.length<=12 ) {
+    //while (checker === 0) {
+      //let prizeCard = Math.floor(Math.random() * 14);
+      //if (prizeCard === 0) { prizeCard += 1 }
+      //if (!prizeCards.includes(prizeCard) && prizeCard) {
+        //$(`main .block-1 #${document.cookie.split(';')[1].split("=")[1]}`).attr("data-cards",prizeCard)
+        //checker =1;
+      //}
+    //}
+  //}
+  //let prizeCard= $(`main .block-1 #${document.cookie.split(';')[1].split("=")[1]}`).attr("data-cards").split(",")[handsPlayed]
+//generatePrizeCard(prizeCard)
 console.log(turns)
     $(`header .block-2`).prepend(`<p class="btn btn-dark btn-lg" ">Total Points - ${player1Points}</p>`)
     $(`footer .block-2`).prepend(`<p class="btn btn-dark btn-lg" >Total Points - ${player2Points}</p>`)
@@ -230,9 +275,9 @@ console.log(turns)
       users.forEach(element => {
         if (element.player1 === user || element.player2 === user) {
           if (element.status === "inactive") {
-            $(`main .block-1`).append(`<p id = ${element.id} class="btn btn-light btn-lg btn-block">${element.id}</p>`)
+            $(`main .block-1`).append(`<p id = ${element.id} data-cards =${element.prizeString} class="btn btn-light btn-lg btn-block">${element.id}</p>`)
           } else if (element.status === "active") {
-            $(`main .block-1`).append(`<p id = ${element.id} class="btn btn-success btn-lg btn-block">${element.id}</p>`)
+            $(`main .block-1`).append(`<p id = ${element.id} data-cards =${element.prizeString} class="btn btn-success btn-lg btn-block">${element.id}</p>`)
           }
           $(`main .block-1 #${element.id}`).data("player1", element.player1)
           $(`main .block-1 #${element.id}`).data("player2", element.player2)
@@ -332,7 +377,7 @@ console.log(turns)
     $.ajax({
       type: "PUT",
       url: "/games",
-      data: { username: user, prizeCards:"5,7,8,9,10,11,12,13,1,2,3,4,6"},
+      data: { username: user, prizeCards:"5,7,8,9,10,11,12,13,1,2,3,4,6,6"},
       success: () => {
         getActiveGames(user)
       },
@@ -483,9 +528,22 @@ console.log(turns)
           status: status
         },
         success: () => {
+          //if(handsPlayed<=12) {
+            generatePrizeCard()
+          //}
+
           socketForGameplay(true)
         //if (status != "done"){
-          generatePrizeCard()
+
+
+
+
+
+
+
+
+
+
          //}
         },
         error: () => {
