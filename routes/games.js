@@ -47,7 +47,7 @@ module.exports = (knex) => {
   //on put request to /games/:gameid (submitting turn information) - enter new information into turns
   //Find all turns with gameid, if there's an entry with no bet2, that turn's unfinished, put bet into bet2
   //After bet2 is updated with new value, turn is finished - calculate winner & points won
-  router.put('/:gameid', (req, res) => {
+  router.post('/:gameid', (req, res) => {
 
 
     knex('turns')
