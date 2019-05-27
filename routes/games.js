@@ -152,7 +152,80 @@ module.exports = (knex) => {
         }
       );
 
-    // if game status = done
+///////////////////// refactored games done code ///////////////
+    // if(req.body.status === 'done'){
+    //   // first find the total points and name of player1, then find total points and name of player2
+    //   knex('turns')
+    //   .join('games', 'games_id', '=', 'games.id')
+    //   .select('games.player1')
+    //   .sum('points')
+    //   .where('games_id', req.params.gameid)
+    //   .where('turns.winner', 'player1')
+    //   .groupBy('games.player1')
+    //   .then((results)=>{
+    //     if ()
+    //     let name1 = results[0].player1;
+    //     let p1 = results[0].sum;
+    //     knex('turns')
+    //     .join('games', 'games_id', '=', 'games.id')
+    //     .select('games.player2')
+    //     .sum('points')
+    //     .where('games_id', req.params.gameid)
+    //     .where('turns.winner', 'player2')
+    //     .groupBy('games.player2')
+    //     .then((results)=>{
+    //       // //determine winner/loser
+    //       let name2 = results[0].player2;
+    //       let p2 = results[0].sum;
+    //       let winner = '';
+    //       let loser = '';
+    //       console.log('name1', name1, 'p1', p1, 'name2', name2, 'p2', p2);
+    //       if (p1 > p2){
+    //         winner = name1;
+    //         loser = name2;
+    //       } else if (p2 > p1){
+    //         winner = name2;
+    //         loser = name1;
+    //       } else if (p2 === p1){
+    //         knex('games')
+    //           .where('id', req.params.gameid)
+    //           .update({ 'status': 'done' })
+    //           .then(() => {
+    //             knex('users')
+    //               .where('username', name1)
+    //               .orWhere('username', name2)
+    //               .increment({ games_played: 1 })
+    //               .then(() => {
+    //                 res.status(200).send()
+    //               })
+    //           })
+    //       }
+    //       // update games table with winner, status, then update users table with games played and games won
+    //       knex('games')
+    //       .where('id', req.params.gameid)
+    //       .update({ 'winner': winner, 'status': 'done' })
+    //       .then((result) => {
+    //         // incrementing games played/won
+    //         knex('users')
+    //           .where('username', winner)
+    //           .increment({ games_played: 1, games_won: 1 })
+    //           .then((results) => {
+    //             knex('users')
+    //               .where('username', loser)
+    //               .increment('games_played')
+    //               .then((results) => {
+    //                 res.status(200).send()
+    //               })
+    //           })
+    //       })//// on ties, only update game status to done and games played
+         
+    //     })
+    //   })
+    // }    
+      
+
+
+    // ///// checking if game status = done after turns end 
     if (req.body.status === 'done') {
       // find name of player1 and player 2
       // select all turns that matches game id
@@ -163,7 +236,7 @@ module.exports = (knex) => {
         .where('winner', 'player1')
         .sum('points')
         .then((results) => {
-          console.log('results for player1 points', results, 'results.sum', results.sum, 'typeof results', typeof results)
+       
 
           let p1 = results[0].sum;
 
@@ -174,9 +247,9 @@ module.exports = (knex) => {
             .where('winner', 'player2')
             //compare who has more points and set winner in games table
             .then((results) => {
-              console.log('results for player2 points', results)
+       
               let p2 = results[0].sum;
-              console.log('p1:', p1, 'p2', p2);
+         
 
               if (p1 > p2) {
                 console.log('player1 winning if loop triggered')
