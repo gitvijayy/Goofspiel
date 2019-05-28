@@ -142,7 +142,7 @@ $(document).ready(function () {
     $(`.player-2`).empty();
     $(`.player-1-prize`).empty();
     $(`.player-2-prize`).empty();
-    //for (var i = 0; i < turns.length; i++) {
+
       turns.forEach(element => {
         turnsData["player1"].push(element.bet1)
         turnsData["player2"].push(element.bet2)
@@ -159,7 +159,7 @@ $(document).ready(function () {
           $(`.bet-2-img`).attr("src", "images/blackBack")
           $(`.player-1`).data("turn", 1);
           $(`.player-2`).data("turn", 0);
-          //$(`.player-2`).attr("turnA", 1);
+
           $(`.prize`).append(`Prize <img class="prize-img" src="images/${element["prize"]}D.png">`)
           $(`.prize`).data("cardIndex", `${element["prize"]}`)
         }
@@ -173,22 +173,13 @@ $(document).ready(function () {
           $(`.prize`).append(`Prize <img class="prize-img" src="images/${element["prize"]}D.png">`)
           $(`.prize`).data("cardIndex", `${element["prize"]}`)
           $(`.bet-1-img`).data("id", element["bet1"])
-          //console.log($(`.bet-1-img`).attr("id"))
+
           $(`.player-2`).data("turn", 1);
           $(`.player-1`).data("turn", 0);
         }
-        // else {
-        //   $(`.player-1`).data("turn", 1);
-        //   $(`.player-2`).data("turn", 0);
-        //   $(`.bet-1-img`).attr("src", `images/aces.png`);
-        //   $(`.bet-2-img`).attr("src", "images/blackBack")
-        //   $(`.prize`).append(`Prize <img class="prize-img" src="images/${element["prize"]}D.png">`)
-        //   $(`.prize`).data("cardIndex", `${element["prize"]}`)
-        // }
-      })
-     // let element = turns[i];
 
-    //}
+      })
+
     for (var i = 1; i < 14; i++) {
       if (!turnsData.player1.includes(i) && document.cookie.split(';')[0].split("=")[1] == $(`.bet-1`).text()) {
         $(`.player-1`).append(`<img id ="${i}" src ="images/${i}C.png")>`)
@@ -258,11 +249,19 @@ $(document).ready(function () {
       $(`main .block-1 p`).remove()
       users.forEach(element => {
         if (element.player1 === user || element.player2 === user) {
+
+
+
+
           if (element.status === "inactive") {
             $(`main .block-1`).append(`<p id = ${element.id} class="btn btn-light btn-lg btn-block">${element.id}</p>`)
           } else if (element.status === "active") {
             $(`main .block-1`).append(`<p id = ${element.id} class="btn btn-dark btn-lg btn-block">${element.id}</p>`)
           }
+
+
+
+
           $(`main .block-1 #${element.id}`).data("player1", element.player1)
           $(`main .block-1 #${element.id}`).data("player2", element.player2)
         }
@@ -279,11 +278,13 @@ $(document).ready(function () {
       data: { username: user },
       success: () => {
         document.cookie = `username=${$(".username").val()}`
-        getActiveGames(user)
+        loginCheck()
+        //getActiveGames(user)
       },
       error: () => {
         document.cookie = `username=${$(".username").val()}`
-        getActiveGames(user)
+        loginCheck()
+        //getActiveGames(user)
       },
     });
   }
